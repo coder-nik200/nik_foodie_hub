@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api/axios";
 import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext({});
@@ -8,7 +8,7 @@ export function UserContextProvider({ children }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    axios
+    api
       .get("/profile")
       .then(({ data }) => {
         setUser(data);

@@ -1,7 +1,6 @@
 //External Module
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
@@ -13,17 +12,13 @@ const app = express();
 const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 const hostRouter = require("./routes/hostRouter");
+const cors = require("./config/cors");
 
 //Middlewares
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors);
 
 app.use("/auth", authRouter);
 app.use(userRouter);
