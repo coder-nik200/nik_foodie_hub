@@ -1,0 +1,148 @@
+{
+  "products": [
+    {
+      "variantId": "ff_1001",
+      "name": "Cheese Burst Pizza",
+      "slug": "cheese-burst-pizza",
+      "category": "Pizza",
+      "photoURL": "https://b.zmtcdn.com/data/pictures/2/21599322/072634f623a1fbecee6eef9baff241d8_o2_featured_v2.jpg",
+      "usp": "Loaded with extra cheese and crispy crust",
+      "weight": "10 inch",
+      "pieces": "6 slices",
+      "serves": "2",
+      "price": {
+        "mrp": 399,
+        "discountedPrice": 299,
+        "discountPercent": 25
+      }
+    },
+    {
+      "variantId": "ff_1002",
+      "name": "Classic Veg Burger",
+      "slug": "classic-veg-burger",
+      "category": "Burger",
+      "photoURL": "https://b.zmtcdn.com/data/pictures/0/21007700/c552f962b46707508d14e75da567f17a_o2_featured_v2.jpg?output-format=webp",
+      "usp": "Crispy patty with fresh veggies and mayo",
+      "weight": "180g",
+      "pieces": "1",
+      "serves": "1",
+      "price": {
+        "mrp": 149,
+        "discountedPrice": 119,
+        "discountPercent": 20
+      }
+    },
+    {
+      "variantId": "ff_1003",
+      "name": "Chicken Zinger Burger",
+      "slug": "chicken-zinger-burger",
+      "category": "Burger",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/2cd/554a151953be2415e44e3d561e8742cd.jpg?output-format=webp",
+      "usp": "Crunchy chicken fillet with spicy sauce",
+      "weight": "220g",
+      "pieces": "1",
+      "serves": "1",
+      "price": {
+        "mrp": 219,
+        "discountedPrice": 179,
+        "discountPercent": 18
+      }
+    },
+    {
+      "variantId": "ff_1004",
+      "name": "French Fries (Large)",
+      "slug": "french-fries-large",
+      "category": "Snacks",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/549/f6d0746969e5a68746d7037aa65b4549.jpeg?output-format=webp",
+      "usp": "Golden, crispy and lightly salted fries",
+      "weight": "200g",
+      "pieces": "1 box",
+      "serves": "1-2",
+      "price": {
+        "mrp": 129,
+        "discountedPrice": 99,
+        "discountPercent": 23
+      }
+    },
+    {
+      "variantId": "ff_1005",
+      "name": "Chicken Popcorn",
+      "slug": "chicken-popcorn",
+      "category": "Snacks",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/f30/1bac609dc6e747b68d824c60aa54bf30.jpg",
+      "usp": "Bite-sized crispy fried chicken",
+      "weight": "250g",
+      "pieces": "20-25",
+      "serves": "2",
+      "price": {
+        "mrp": 249,
+        "discountedPrice": 199,
+        "discountPercent": 20
+      }
+    },
+    {
+      "variantId": "ff_1006",
+      "name": "Chicken Shawarma Roll",
+      "slug": "chicken-shawarma-roll",
+      "category": "Wraps",
+      "photoURL": "https://imgs.search.brave.com/GHXNIoOU7I4AFwvqaL4p2s5rAmembadhnUuxtEcwyzA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/YWxscmVjaXBlcy5j/b20vdGhtYi9EVzI1/a0o3cHFqLXlybVhh/dHc0dmpEZVh2aVE9/LzB4NTEyL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpLzUy/NDA3LWNoaWNrZW4t/c2hhd2FybWEtVkFU/LTAwMy00eDMtMDEt/MzE4OWJhYjQ0M2Qx/NGJmMjgyZmZjYzNi/ODdiY2Y1NWEuanBn",
+      "usp": "Juicy chicken wrapped in soft pita bread",
+      "weight": "280g",
+      "pieces": "1",
+      "serves": "1",
+      "price": {
+        "mrp": 199,
+        "discountedPrice": 159,
+        "discountPercent": 20
+      }
+    },
+    {
+      "variantId": "ff_1007",
+      "name": "Veg Loaded Nachos",
+      "slug": "veg-loaded-nachos",
+      "category": "Snacks",
+      "photoURL": "https://imgs.search.brave.com/XrY9VBFT8vwFmD1-0rXO7fQ7bCybRdwZ-xDyVLxpp94/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/dGFtaW5ndHdpbnMu/Y29tL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIyLzA3L3ZlZ2dp/ZS1uYWNob3MtMi5q/cGc",
+      "usp": "Nachos topped with cheese and veggies",
+      "weight": "300g",
+      "pieces": "1 plate",
+      "serves": "2-3",
+      "price": {
+        "mrp": 249,
+        "discountedPrice": 189,
+        "discountPercent": 24
+      }
+    },
+    {
+      "variantId": "ff_1008",
+      "name": "Cold Coffee with Ice Cream",
+      "slug": "cold-coffee-ice-cream",
+      "category": "Beverages",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/944/d2ce2789ef20b4ebf45966c242168944.jpg?output-format=webp",
+      "usp": "Chilled coffee topped with vanilla ice cream",
+      "weight": "350ml",
+      "pieces": "1 glass",
+      "serves": "1",
+      "price": {
+        "mrp": 179,
+        "discountedPrice": 139,
+        "discountPercent": 22
+      }
+    },
+    {
+      "variantId": "ff_1009",
+      "name": "Paneer Tikka Wrap",
+      "slug": "paneer-tikka-wrap",
+      "category": "Wraps",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/77e/f1bf81209279828ce37a0625833a677e.jpg?output-format=webp",
+      "usp": "Spicy paneer tikka wrapped with fresh veggies and sauce",
+      "weight": "260g",
+      "pieces": "1",
+      "serves": "1",
+      "price": {
+        "mrp": 189,
+        "discountedPrice": 149,
+        "discountPercent": 21
+      }
+    }
+  ]
+}
