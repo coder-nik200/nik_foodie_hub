@@ -28,12 +28,14 @@
 // //   }
 // // };
 
-import axios from "axios";
 import fs from "fs";
 
 // Load JSON safely in ESM
 const fastFoodData = JSON.parse(
   fs.readFileSync(new URL("../data/fastFoodData.json", import.meta.url))
+);
+const currentHits = JSON.parse(
+  fs.readFileSync(new URL("../data/currenthits.json", import.meta.url))
 );
 
 // Get all food options
@@ -49,14 +51,29 @@ const getFoodOptions = async (req, res) => {
 const getFoodById = async (req, res) => {
   const { id } = req.params;
   try {
-    const food = fastFoodData.find((item) => item.id === Number(id));
+    let food = null;
+
+    food = fastFoodData.find((item) => item.id === Number(id));
+
+    if (!food) {
+      food = currentHits.products.find((item) => item.variantId === id);
+    }
+
     if (!food) {
       return res.status(404).json({ message: "Food not found" });
     }
-    res.json({ product: food });
+    res.status(200).json({ product: food });
   } catch (error) {
     res.status(500).json({ message: "Food API failed" });
   }
 };
 
-export { getFoodOptions, getFoodById };
+const getCurrentHits = async (req, res) => {
+  try {
+    res.json({ products: currentHits.products }); // send all products
+  } catch (error) {
+    res.status(500).json({ message: "Food API failed" });
+  }
+};
+
+export { getFoodOptions, getFoodById, getCurrentHits };
