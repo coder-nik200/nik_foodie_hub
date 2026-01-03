@@ -1,33 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
+import api from "../api/axios";
 import { useEffect, useState } from "react";
-import api from "../api/axios"; // ✅ make sure you import your axios instance
 
-const ViewAllHits = () => {
+const DrinksDetails = () => {
   const navigate = useNavigate();
-  const [food, setFood] = useState([]); // start with empty array
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState(null);
   const [error, setError] = useState("");
-
-  const handleClick = (variantId) => {
-    navigate(`/food/${variantId}`);
-  };
 
   useEffect(() => {
     api
-      .get("/foods/view-all-hits")
-      .then((res) => setFood(res.data.products)) // ✅ use API response
+      .get("/foods/drinks")
+      .then((res) => {
+        setCategory(res.data); // full object
+        setProducts(res.data.products); // array
+      })
       .catch((err) => {
-        if (err.response) {
-          setError(err.response.data.message);
-        } else {
-          setError("Something went wrong");
-        }
+        setError(err.response?.data?.message || "Something went wrong");
       });
-  }, []); // ✅ dependency array to avoid infinite loop
+  }, []);
 
   return (
-    <section className="w-full py-4 px-4 lg:px-20">
+    <section className="w-full py-4 px-4 lg:px-60">
       {/* Header Row */}
       <div className="flex items-center justify-between mb-4">
         {/* Back Arrow */}
@@ -38,13 +34,8 @@ const ViewAllHits = () => {
           <FaArrowLeftLong />
         </button>
 
-        <div>
-          {/* Title */}
-          <h2 className="text-[1.2rem] font-semibold">Our current hits</h2>
-          <h3 className="text-sm text-gray-500 mt-1">
-            Here’s what everyone’s eating!
-          </h3>
-        </div>
+        {/* Title */}
+        <h2 className="text-[1.2rem] font-semibold">Refreshing Drinks</h2>
 
         {/* Search Icon */}
         <button className="text-2xl cursor-pointer md:hidden">
@@ -54,18 +45,18 @@ const ViewAllHits = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-        {food.map((item) => (
+        {products.map((item) => (
           <div
             key={item.variantId}
-            onClick={() => handleClick(item.variantId)}
             className="bg-white rounded-b-2xl shadow-lg"
           >
             {/* Product Image */}
             <img
-              src={item.photoURL}
+              src={item.image}
               alt={item.name}
               className="w-full h-60 object-cover rounded-t-2xl"
             />
+
             <div className="p-3">
               {/* Product Name */}
               <h3 className="font-medium mt-2 text-sm sm:text-base md:text-base">
@@ -74,12 +65,12 @@ const ViewAllHits = () => {
                   : item.name}
               </h3>
 
-              {/* USP */}
-              <p className="text-xs sm:text-sm">
-                {item.usp.length > 48
-                  ? item.usp.slice(0, 48) + "..."
-                  : item.usp}
-              </p>
+              {/* USP / Description */}
+              {/* <p className="text-xs sm:text-sm">
+                {item.uspDescription.length > 48
+                  ? item.uspDescription.slice(0, 48) + "..."
+                  : item.uspDescription}
+              </p> */}
 
               {/* Weight | Pieces | Serves */}
               <p className="text-sm text-gray-600 mt-1">
@@ -88,23 +79,20 @@ const ViewAllHits = () => {
 
               {/* Price */}
               <p className="font-semibold mt-2">
-                ₹{item.price.discountedPrice}
+                ₹{item.discountedPrice}
                 <span className="text-gray-400 line-through ml-1">
-                  ₹{item.price.mrp}
+                  ₹{item.basePrice}
                 </span>
                 <span className="text-green-600 ml-1">
-                  ({item.price.discountPercent}% OFF)
+                  ({item.discountPercentage}% OFF)
                 </span>
               </p>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Error Message */}
-      {error && <p className="text-red-500 mt-4">{error}</p>}
     </section>
   );
 };
 
-export default ViewAllHits;
+export default DrinksDetails;

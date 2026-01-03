@@ -37,6 +37,12 @@ const fastFoodData = JSON.parse(
 const currentHits = JSON.parse(
   fs.readFileSync(new URL("../data/currenthits.json", import.meta.url))
 );
+const sweetsData = JSON.parse(
+  fs.readFileSync(new URL("../data/sweetsData.json", import.meta.url))
+);
+const drinksData = JSON.parse(
+  fs.readFileSync(new URL("../data/drinksData.json", import.meta.url))
+);
 
 // Get all food options
 const getFoodOptions = async (req, res) => {
@@ -59,6 +65,10 @@ const getFoodById = async (req, res) => {
       food = currentHits.products.find((item) => item.variantId === id);
     }
 
+    // if (!food) {
+    //   food = muttonData.products.find((item) => item.variantId === id);
+    // }
+
     if (!food) {
       return res.status(404).json({ message: "Food not found" });
     }
@@ -76,4 +86,20 @@ const getCurrentHits = async (req, res) => {
   }
 };
 
-export { getFoodOptions, getFoodById, getCurrentHits };
+const getSweetFood = async (req, res) => {
+  try {
+    res.json({ products: sweetsData.products }); // send all products
+  } catch (error) {
+    res.status(500).json({ message: "Food API failed" });
+  }
+};
+
+const getDrinks = async (req, res) => {
+  try {
+    res.json({ products: drinksData.products }); // send all products
+  } catch (error) {
+    res.status(500).json({ message: "Food API failed" });
+  }
+};
+
+export { getFoodOptions, getFoodById, getCurrentHits, getSweetFood, getDrinks };
