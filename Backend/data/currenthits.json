@@ -143,6 +143,54 @@
         "discountedPrice": 149,
         "discountPercent": 21
       }
+    },
+    {
+      "variantId": "ff_1010",
+      "name": "Butter Chicken with Naan",
+      "slug": "butter-chicken-naan",
+      "category": "Main Course",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/8cb/3f6fcd3993ec8cb6bc82c23f126a48cb.jpg?output-format=webp",
+      "usp": "Creamy butter chicken served with soft naan",
+      "weight": "450g",
+      "pieces": "2 naan",
+      "serves": "2",
+      "price": {
+        "mrp": 349,
+        "discountedPrice": 279,
+        "discountPercent": 20
+      }
+    },
+    {
+      "variantId": "ff_1011",
+      "name": "Veg Biryani",
+      "slug": "veg-biryani",
+      "category": "Rice",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/262/785573587a3fb599a65f8cdf5f706262.jpeg",
+      "usp": "Aromatic basmati rice cooked with fresh vegetables",
+      "weight": "400g",
+      "pieces": "1 bowl",
+      "serves": "1-2",
+      "price": {
+        "mrp": 229,
+        "discountedPrice": 179,
+        "discountPercent": 22
+      }
+    },
+    {
+      "variantId": "ff_1012",
+      "name": "Chocolate Lava Cake",
+      "slug": "chocolate-lava-cake",
+      "category": "Dessert",
+      "photoURL": "https://b.zmtcdn.com/data/dish_photos/87f/2c44e1283b290fd64e08691f3338787f.jpeg?output-format=webp",
+      "usp": "Warm chocolate cake with molten center",
+      "weight": "120g",
+      "pieces": "1",
+      "serves": "1",
+      "price": {
+        "mrp": 149,
+        "discountedPrice": 119,
+        "discountPercent": 20
+      }
     }
   ]
 }
