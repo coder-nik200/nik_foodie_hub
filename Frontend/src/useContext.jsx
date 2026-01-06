@@ -50,7 +50,7 @@ export function UserContextProvider({ children }) {
     api
       .get("/auth/profile", { withCredentials: true })
       .then(({ data }) => {
-        console.log("Profile response:", data);
+        // console.log("Profile response:", data);
         setUser(data);
         setReady(true);
       })
