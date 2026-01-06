@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import api from "../api/axios";
+import { UserContext } from "../useContext";
 
 const SweetDetails = () => {
   const navigate = useNavigate();
+  const { addToCart } = useContext(UserContext);
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState(null);
   const [error, setError] = useState("");
@@ -82,6 +84,15 @@ const SweetDetails = () => {
                 </p>
               </div>
             </Link>
+            <button
+              onClick={() => {
+                addToCart(item);
+                navigate("/cart");
+              }}
+              className="w-full px-4 py-2 bg-orange-500 text-white rounded-b-2xl hover:bg-orange-600"
+            >
+              Add to Cart
+            </button>
           </div>
         ))}
       </div>

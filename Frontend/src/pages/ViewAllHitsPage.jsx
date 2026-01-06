@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { UserContext } from "../useContext";
 
 // Helper function to display stars
 const renderStars = (ratingValue) => {
@@ -22,18 +23,32 @@ export default function ViewAllHitsPage() {
   const [food, setFood] = useState(null);
   const [allFoods, setAllFoods] = useState([]);
   const [error, setError] = useState("");
+  const { addToCart } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Scroll to top whenever the food id changes
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Get selected food
+    // Try to get selected food from view-all-hits first, then sweets, then drinks
     api
       .get(`/foods/view-all-hits/${id}`)
       .then((res) => setFood(res.data.product))
-      .catch((err) =>
-        setError(err.response?.data?.message || "Something went wrong")
-      );
+      .catch(() => {
+        // Try sweets endpoint
+        api
+          .get(`/foods/sweet/${id}`)
+          .then((res) => setFood(res.data.product))
+          .catch(() => {
+            // Try drinks endpoint
+            api
+              .get(`/foods/drinks/${id}`)
+              .then((res) => setFood(res.data.product))
+              .catch((err) =>
+                setError(err.response?.data?.message || "Something went wrong")
+              );
+          });
+      });
 
     // Get all foods for recommendations and full menu
     api
@@ -47,11 +62,13 @@ export default function ViewAllHitsPage() {
 
   const recommendations = allFoods.filter(
     (item) =>
-      item.category === food.category && item.variantId !== food.variantId
+      item.variantId &&
+      item.category === food.category &&
+      item.variantId !== food.variantId
   );
 
   const otherFoods = allFoods.filter(
-    (item) => item.variantId !== food.variantId
+    (item) => item.variantId && item.variantId !== food.variantId
   );
 
   return (
@@ -84,26 +101,52 @@ export default function ViewAllHitsPage() {
             <p>
               <strong>Rating:</strong>{" "}
               <span className="text-yellow-500">
-                {renderStars(food.rating.value)}
+                {food.rating
+                  ? renderStars(food.rating.value)
+                  : renderStars(0)}
               </span>{" "}
-              ({food.rating.value} / 5, {food.rating.reviews} reviews)
+              {food.rating
+                ? `(${food.rating.value} / 5, ${food.rating.reviews} reviews)`
+                : "(No ratings yet)"}
             </p>
           </div>
 
           {/* PRICE */}
           <div className="mt-6">
-            <span className="text-3xl font-bold text-green-600">
-              ₹{food.price.discountedPrice}
-            </span>
-            <span className="line-through text-gray-500 ml-3">
-              ₹{food.price.mrp}
-            </span>
-            <span className="ml-3 text-red-500 font-semibold">
-              ({food.price.discountPercent}% OFF)
-            </span>
+            {food.price ? (
+              <>
+                <span className="text-3xl font-bold text-green-600">
+                  ₹{food.price.discountedPrice}
+                </span>
+                <span className="line-through text-gray-500 ml-3">
+                  ₹{food.price.mrp}
+                </span>
+                <span className="ml-3 text-red-500 font-semibold">
+                  ({food.price.discountPercent}% OFF)
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="text-3xl font-bold text-green-600">
+                  ₹{food.discountedPrice ?? 0}
+                </span>
+                <span className="line-through text-gray-500 ml-3">
+                  ₹{food.basePrice ?? 0}
+                </span>
+                <span className="ml-3 text-red-500 font-semibold">
+                  ({food.discountPercentage ?? 0}% OFF)
+                </span>
+              </>
+            )}
           </div>
 
-          <button className="mt-6 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+          <button
+            onClick={() => {
+              addToCart(food);
+              navigate("/cart");
+            }}
+            className="mt-6 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600"
+          >
             Add to Cart
           </button>
         </div>

@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
 import api from "../api/axios";
+import { UserContext } from "../useContext";
 
 // Helper function to display stars
 const renderStars = (ratingValue) => {
@@ -23,6 +25,8 @@ export default function SpecificSweetPage() {
   const [allSweets, setAllSweets] = useState([]);
   const [allFoods, setAllFoods] = useState([]);
   const [error, setError] = useState("");
+  const { addToCart } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -56,13 +60,14 @@ export default function SpecificSweetPage() {
   if (error) return <p className="text-center mt-10">{error}</p>;
   if (!sweet) return <p className="text-center mt-10">Loading...</p>;
 
+  const currentId = sweet.variantId || sweet.id;
+
   const recommendations = allSweets.filter(
-    (item) =>
-      item.category === sweet.category && item.variantId !== sweet.variantId
+    (item) => (item.variantId || item.id) !== currentId
   );
 
   const otherFoods = allFoods.filter(
-    (item) => item.variantId !== sweet.variantId
+    (item) => (item.variantId || item.id) !== currentId
   );
 
   return (
@@ -70,7 +75,7 @@ export default function SpecificSweetPage() {
       {/* SWEET DETAILS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <img
-          src={sweet.image}
+          src={sweet.image || sweet.photoURL || sweet.photoUrl}
           alt={sweet.name}
           className="w-full max-w-md rounded-xl shadow-lg mx-auto"
         />
@@ -128,7 +133,13 @@ export default function SpecificSweetPage() {
             )}
           </div>
 
-          <button className="mt-6 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600">
+          <button
+            onClick={() => {
+              addToCart(sweet);
+              navigate("/cart");
+            }}
+            className="mt-6 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600"
+          >
             Add to Cart
           </button>
         </div>
@@ -144,12 +155,12 @@ export default function SpecificSweetPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {recommendations.map((item) => (
               <Link
-                to={`/foods/sweet/${item.variantId}`}
-                key={item.variantId}
+                to={`/foods/sweet/${item.variantId || item.id}`}
+                key={item.variantId || item.id}
                 className="border rounded-xl p-4 hover:shadow-lg transition"
               >
                 <img
-                  src={item.image}
+                  src={item.image || item.photoURL || item.photoUrl}
                   alt={item.name}
                   className="h-40 w-full object-cover rounded-lg"
                 />
