@@ -174,6 +174,10 @@ const getSpecificItem = async (req, res) => {
   });
 };
 
+const postAddToCart = async (req, res) => {
+  
+}
+
 export {
   getFoodOptions,
   getFoodDetails,

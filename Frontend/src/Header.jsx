@@ -13,6 +13,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const { user } = useContext(UserContext);
+  const { cart } = useContext(UserContext);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
@@ -73,9 +74,12 @@ export default function Header() {
             className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-orange-400"
           >
             <IoCartOutline className="text-2xl" />
-            <span className="absolute -top-1 -right-1 bg-[#ff5200] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-              2
-            </span>
+
+            {cart?.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#ff5200] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cart.length}
+              </span>
+            )}
           </Link>
 
           {/* AUTH BUTTONS */}
