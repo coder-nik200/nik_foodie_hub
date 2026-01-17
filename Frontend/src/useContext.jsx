@@ -30,11 +30,14 @@ export function UserContextProvider({ children }) {
 
     setCart((prev) => {
       const exists = prev.find(
-        (p) => (p.variantId || p.id) === (normalizedProduct.variantId || normalizedProduct.id)
+        (p) =>
+          (p.variantId || p.id) ===
+          (normalizedProduct.variantId || normalizedProduct.id)
       );
       if (exists)
         return prev.map((p) =>
-          (p.variantId || p.id) === (normalizedProduct.variantId || normalizedProduct.id)
+          (p.variantId || p.id) ===
+          (normalizedProduct.variantId || normalizedProduct.id)
             ? { ...p, qty: (p.qty || 1) + 1 }
             : p
         );
@@ -44,6 +47,11 @@ export function UserContextProvider({ children }) {
 
   const removeFromCart = (variantId) => {
     setCart((prev) => prev.filter((p) => (p.variantId || p.id) !== variantId));
+  };
+
+  const clearCart = () => {
+    setCart([]); // empty the cart
+    localStorage.removeItem("cart"); // also clear localStorage
   };
 
   useEffect(() => {
@@ -62,7 +70,15 @@ export function UserContextProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, ready, cart, addToCart, removeFromCart }}
+      value={{
+        user,
+        setUser,
+        ready,
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+      }}
     >
       {children}
     </UserContext.Provider>

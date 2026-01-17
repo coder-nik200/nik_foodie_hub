@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useContext(UserContext);
+  const { cart, removeFromCart, clearCart } = useContext(UserContext);
   const navigate = useNavigate();
 
   const getItemLink = (item) => {
@@ -93,9 +93,11 @@ export default function CartPage() {
         <div className="text-xl">Total: ₹{total}</div>
         <button
           onClick={() => {
-            toast.success(
-              "✅ Order placed successfully! Thank you for shopping with us!"
-            );
+            toast.success("✅ Order placed successfully!");
+            setTimeout(() => {
+              clearCart();
+              navigate("/");
+            }, 1500); // 1.5 seconds delay
           }}
           className="mt-4 px-6 py-3 bg-green-600 text-white rounded"
         >

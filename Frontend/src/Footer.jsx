@@ -71,7 +71,9 @@ const Footer = () => {
             <div className="flex gap-4 mt-2">
               {/* Gmail */}
               <a
-                href="https://mail.google.com/mail/u/0/#inbox?compose=new"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=codesnippet17@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-[#2b2b2b] rounded-full hover:bg-[#ff5200] hover:scale-110 transition text-white"
                 aria-label="Email"
               >
@@ -102,7 +104,7 @@ const Footer = () => {
 
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/in/nitish-kumar-631a37359"
+                href="https://www.linkedin.com/in/nitish-kumar-bharti-631a37359/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-[#2b2b2b] rounded-full hover:bg-[#ff5200] hover:scale-110 transition text-white"
