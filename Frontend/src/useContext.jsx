@@ -22,27 +22,38 @@ export function UserContextProvider({ children }) {
   }, [cart]);
 
   const addToCart = (product) => {
-    // Normalize product to use variantId consistently
     const normalizedProduct = {
       ...product,
-      variantId: product.variantId || product.id, // Use variantId if available, otherwise use id
+      variantId: product.variantId || product.id,
     };
 
     setCart((prev) => {
       const exists = prev.find(
-        (p) =>
-          (p.variantId || p.id) ===
-          (normalizedProduct.variantId || normalizedProduct.id)
+        (p) => (p.variantId || p.id) === normalizedProduct.variantId,
       );
-      if (exists)
+
+      if (exists) {
         return prev.map((p) =>
-          (p.variantId || p.id) ===
-          (normalizedProduct.variantId || normalizedProduct.id)
+          (p.variantId || p.id) === normalizedProduct.variantId
             ? { ...p, qty: (p.qty || 1) + 1 }
-            : p
+            : p,
         );
+      }
+
       return [...prev, { ...normalizedProduct, qty: 1 }];
     });
+  };
+
+  const decrementQty = (variantId) => {
+    setCart((prev) =>
+      prev
+        .map((p) =>
+          (p.variantId || p.id) === variantId
+            ? { ...p, qty: (p.qty || 1) - 1 }
+            : p,
+        )
+        .filter((p) => p.qty > 0),
+    );
   };
 
   const removeFromCart = (variantId) => {
@@ -77,6 +88,7 @@ export function UserContextProvider({ children }) {
         cart,
         addToCart,
         removeFromCart,
+        decrementQty,
         clearCart,
       }}
     >

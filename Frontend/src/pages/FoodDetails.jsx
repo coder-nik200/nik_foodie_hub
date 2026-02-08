@@ -2,10 +2,11 @@ import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { UserContext } from "../useContext";
+import toast from "react-hot-toast";
 
 export default function FoodDetails() {
-  const { id } = useParams(); // categoryId (burger, pizza)
-  const { addToCart } = useContext(UserContext);
+  const { id } = useParams();
+  const { addToCart, user } = useContext(UserContext);
   const navigate = useNavigate();
   const [foods, setFoods] = useState([]);
   const [error, setError] = useState("");
@@ -15,7 +16,7 @@ export default function FoodDetails() {
     api
       .get(`/foods/category/${id}`)
       .then((res) => {
-        setFoods(res.data.products); // ✅ ARRAY
+        setFoods(res.data.products);
         setLoading(false);
       })
       .catch((err) => {
@@ -33,44 +34,55 @@ export default function FoodDetails() {
         {foods.map((item) => (
           <div
             key={item.id}
-            className="border rounded-xl p-4 hover:shadow-lg transition"
+            className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
           >
             <Link to={`/foods/view-all-hits/${item.id}`}>
-              <img
-                src={item.photoURL}
-                alt={item.name}
-                className="h-40 w-full object-cover rounded-lg"
-              />
-              <h3 className="mt-3 font-semibold">{item.name}</h3>
-              <p className="text-green-600 font-bold mt-1">
-                ₹
-                {typeof item.price === "object"
-                  ? item.price.discountedPrice
-                  : item.price}
-                {typeof item.price === "object" && (
-                  <>
-                    <span className="line-through text-gray-500 ml-2">
-                      ₹{item.price.mrp}
-                    </span>
-                    <span className="ml-2 text-red-500 font-semibold">
-                      ({item.price.discountPercent}% OFF)
-                    </span>
-                  </>
-                )}
-              </p>
-              <p className="text-sm text-gray-500">
-                ⭐{" "}
-                {typeof item.rating === "object"
-                  ? item.rating.value
-                  : item.rating}
-              </p>
+              {/* Image */}
+              <div className="overflow-hidden">
+                <img
+                  src={item.photoURL}
+                  alt={item.name}
+                  className="h-44 w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-4 space-y-1">
+                <h3 className="font-semibold line-clamp-1">{item.name}</h3>
+
+                <p className="text-sm text-gray-500 line-clamp-2">{item.usp}</p>
+
+                <p className="text-xs text-gray-500 mt-1">
+                  {item.weight} | {item.pieces || "-"} | Serves {item.serves}
+                </p>
+
+                <p className="font-semibold text-base mt-2">
+                  ₹{item.price.discountedPrice}
+                  <span className="line-through text-gray-400 ml-2">
+                    ₹{item.price.mrp}
+                  </span>
+                  <span className="text-green-600 ml-2 text-sm">
+                    ({item.price.discountPercent}% OFF)
+                  </span>
+                </p>
+              </div>
             </Link>
+
+            {/* CTA */}
             <button
               onClick={() => {
+                if (!user) {
+                  toast.error("Please login to add items to cart");
+                  navigate("/login");
+                  return;
+                }
+
                 addToCart(item);
+                toast.success(`✅ ${item.name} added to cart!`);
                 navigate("/cart");
               }}
-              className="mt-3 w-full px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+              className="w-full py-3 bg-orange-500 text-white font-semibold
+                         hover:bg-orange-600 active:scale-95 transition-all"
             >
               Add to Cart
             </button>

@@ -53,47 +53,67 @@ const ViewAllHits = () => {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {food?.length > 0 ? (
           food.map((item) => (
             <div
               key={item.variantId}
               onClick={() => handleClick(item.variantId)}
-              className="bg-white rounded-b-2xl shadow-lg cursor-pointer"
+              className="group bg-white rounded-2xl overflow-hidden 
+                   shadow-sm hover:shadow-xl 
+                   transition-all duration-300 
+                   cursor-pointer"
             >
-              <img
-                src={item.photoURL}
-                alt={item.name}
-                className="w-full h-60 object-cover rounded-t-2xl"
-              />
-              <div className="p-3">
-                <h3 className="font-medium mt-2 text-sm sm:text-base md:text-base">
+              {/* Image */}
+              <div className="overflow-hidden">
+                <img
+                  src={item.photoURL}
+                  alt={item.name}
+                  className="w-full h-60 object-cover 
+                       group-hover:scale-105 
+                       transition-transform duration-300"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-4 space-y-2">
+                <h3 className="font-semibold text-sm sm:text-base md:text-lg leading-snug">
                   {item.name?.length > 48
                     ? item.name.slice(0, 30) + "..."
                     : item.name}
                 </h3>
-                <p className="text-xs sm:text-sm">
+
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {item.usp?.length > 48
                     ? item.usp.slice(0, 48) + "..."
                     : item.usp}
                 </p>
-                <p className="text-sm text-gray-600 mt-1">
-                  {item.weight} | {item.pieces} pcs | Serves {item.serves}
+
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {item.weight} • {item.pieces} pcs • Serves {item.serves}
                 </p>
-                <p className="font-semibold mt-2">
-                  ₹{item.price?.discountedPrice || 0}
-                  <span className="text-gray-400 line-through ml-1">
+
+                {/* Price */}
+                <div className="flex items-center flex-wrap gap-1 pt-2">
+                  <span className="font-bold text-base text-gray-900">
+                    ₹{item.price?.discountedPrice || 0}
+                  </span>
+
+                  <span className="text-sm text-gray-400 line-through">
                     ₹{item.price?.mrp || 0}
                   </span>
-                  <span className="text-green-600 ml-1">
-                    ({item.price?.discountPercent || 0}% OFF)
+
+                  <span className="text-sm text-green-600 font-semibold">
+                    {item.price?.discountPercent || 0}% OFF
                   </span>
-                </p>
+                </div>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-center col-span-full mt-4">No products found</p>
+          <p className="text-center col-span-full mt-6 text-gray-500">
+            No products found
+          </p>
         )}
       </div>
 

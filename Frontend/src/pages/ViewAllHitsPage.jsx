@@ -3,28 +3,14 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
-
-/* ⭐ Helper: rating stars */
-const renderStars = (ratingValue = 0) => {
-  const fullStars = Math.floor(ratingValue);
-  const halfStar = ratingValue - fullStars >= 0.5;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-  return (
-    <>
-      {"★".repeat(fullStars)}
-      {halfStar && "☆"}
-      {"☆".repeat(emptyStars)}
-    </>
-  );
-};
+import { RenderStars } from "../components/RenderStarts";
 
 export default function ViewAllHitsPage() {
   const { id } = useParams();
   const [food, setFood] = useState(null);
   const [allFoods, setAllFoods] = useState([]);
   const [error, setError] = useState("");
-  const { addToCart } = useContext(UserContext);
+  const { addToCart, user } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,9 +28,9 @@ export default function ViewAllHitsPage() {
               .get(`/foods/drinks/${id}`)
               .then((res) => setFood(res.data.product))
               .catch((err) =>
-                setError(err.response?.data?.message || "Something went wrong")
-              )
-          )
+                setError(err.response?.data?.message || "Something went wrong"),
+              ),
+          ),
       );
 
     api
@@ -60,11 +46,11 @@ export default function ViewAllHitsPage() {
     (item) =>
       item.variantId &&
       item.category === food.category &&
-      item.variantId !== food.variantId
+      item.variantId !== food.variantId,
   );
 
   const otherFoods = allFoods.filter(
-    (item) => item.variantId && item.variantId !== food.variantId
+    (item) => item.variantId && item.variantId !== food.variantId,
   );
 
   return (
@@ -101,7 +87,7 @@ export default function ViewAllHitsPage() {
             <p>
               <strong>Rating:</strong>{" "}
               <span className="text-yellow-500">
-                {renderStars(food.rating?.value)}
+                {RenderStars(food.rating?.value)}
               </span>{" "}
               {food.rating
                 ? `(${food.rating.value} / 5, ${food.rating.reviews} reviews)`
@@ -127,6 +113,12 @@ export default function ViewAllHitsPage() {
 
           <button
             onClick={() => {
+              if (!user) {
+                toast.error("Please login to add items to cart");
+                navigate("/login");
+                return;
+              }
+
               addToCart(food);
               toast.success(`✅ ${food.name} added to cart!`);
               navigate("/cart");
@@ -140,76 +132,112 @@ export default function ViewAllHitsPage() {
 
       {/* RECOMMENDATIONS */}
       {recommendations.length > 0 && (
-        <div className="mt-14">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
+        <section className="mt-16">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8">
             Recommended {food.category}
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {recommendations.map((item) => (
               <Link
                 to={`/foods/view-all-hits/${item.variantId}`}
                 key={item.variantId}
-                className="border rounded-xl p-4 hover:shadow-lg transition"
+                className="group bg-white rounded-2xl overflow-hidden
+                     shadow-sm hover:shadow-xl
+                     transition-all duration-300"
               >
-                <img
-                  src={item.photoURL}
-                  alt={item.name}
-                  className="h-36 sm:h-40 w-full object-cover rounded-lg"
-                />
-                <h3 className="mt-3 font-semibold text-sm sm:text-base">
-                  {item.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
-                  {item.usp}
-                </p>
-                <p className="mt-1 text-yellow-500 text-sm">
-                  {renderStars(item.rating?.value)} ({item.rating?.value || 0})
-                </p>
-                <p className="mt-2 font-bold text-green-600">
-                  ₹{item.price?.discountedPrice || 0}
-                </p>
+                {/* Image */}
+                <div className="overflow-hidden">
+                  <img
+                    src={item.photoURL}
+                    alt={item.name}
+                    className="h-36 sm:h-40 w-full object-cover
+                         group-hover:scale-105
+                         transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-4 space-y-1">
+                  <h3 className="font-semibold text-sm sm:text-base leading-snug">
+                    {item.name}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
+                    {item.usp}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-yellow-500 text-sm">
+                      {RenderStars(item.rating?.value)}{" "}
+                      <span className="text-gray-500">
+                        ({item.rating?.value || 0})
+                      </span>
+                    </span>
+
+                    <span className="font-bold text-green-600">
+                      ₹{item.price?.discountedPrice || 0}
+                    </span>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
       {/* FULL MENU */}
       {otherFoods.length > 0 && (
-        <div className="mt-14">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
-            All Foods
-          </h2>
+        <section className="mt-20">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8">All Foods</h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {otherFoods.map((item) => (
               <Link
                 to={`/foods/view-all-hits/${item.variantId}`}
                 key={item.variantId}
-                className="border rounded-xl p-4 hover:shadow-lg transition"
+                className="group bg-white rounded-2xl overflow-hidden
+                     shadow-sm hover:shadow-xl
+                     transition-all duration-300"
               >
-                <img
-                  src={item.photoURL}
-                  alt={item.name}
-                  className="h-36 sm:h-40 w-full object-cover rounded-lg"
-                />
-                <h3 className="mt-3 font-semibold text-sm sm:text-base">
-                  {item.name}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
-                  {item.usp}
-                </p>
-                <p className="mt-1 text-yellow-500 text-sm">
-                  {renderStars(item.rating?.value)} ({item.rating?.value || 0})
-                </p>
-                <p className="mt-2 font-bold text-green-600">
-                  ₹{item.price?.discountedPrice || 0}
-                </p>
+                {/* Image */}
+                <div className="overflow-hidden">
+                  <img
+                    src={item.photoURL}
+                    alt={item.name}
+                    className="h-36 sm:h-40 w-full object-cover
+                         group-hover:scale-105
+                         transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-4 space-y-1">
+                  <h3 className="font-semibold text-sm sm:text-base leading-snug">
+                    {item.name}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
+                    {item.usp}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-yellow-500 text-sm">
+                      {RenderStars(item.rating?.value)}{" "}
+                      <span className="text-gray-500">
+                        ({item.rating?.value || 0})
+                      </span>
+                    </span>
+
+                    <span className="font-bold text-green-600">
+                      ₹{item.price?.discountedPrice || 0}
+                    </span>
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       )}
     </div>
   );

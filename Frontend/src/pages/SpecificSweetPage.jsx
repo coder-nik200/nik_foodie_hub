@@ -4,21 +4,8 @@ import { useParams, Link } from "react-router-dom";
 import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
-
-// Helper function to display stars
-const renderStars = (ratingValue) => {
-  const fullStars = Math.floor(ratingValue);
-  const halfStar = ratingValue - fullStars >= 0.5;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-  return (
-    <>
-      {"★".repeat(fullStars)}
-      {halfStar && "☆"}
-      {"☆".repeat(emptyStars)}
-    </>
-  );
-};
+import FullMenu from "../components/FullMenu";
+import { RenderStars } from "../components/RenderStarts";
 
 export default function SpecificSweetPage() {
   const { id } = useParams();
@@ -26,7 +13,7 @@ export default function SpecificSweetPage() {
   const [allSweets, setAllSweets] = useState([]);
   const [allFoods, setAllFoods] = useState([]);
   const [error, setError] = useState("");
-  const { addToCart } = useContext(UserContext);
+  const { addToCart, user } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +29,7 @@ export default function SpecificSweetPage() {
       .get(`/foods/sweet/${id}`)
       .then((res) => setSweet(res.data.product))
       .catch((err) =>
-        setError(err.response?.data?.message || "Something went wrong")
+        setError(err.response?.data?.message || "Something went wrong"),
       );
 
     // Get all sweets for recommendations
@@ -64,11 +51,11 @@ export default function SpecificSweetPage() {
   const currentId = sweet.variantId || sweet.id;
 
   const recommendations = allSweets.filter(
-    (item) => (item.variantId || item.id) !== currentId
+    (item) => (item.variantId || item.id) !== currentId,
   );
 
   const otherFoods = allFoods.filter(
-    (item) => (item.variantId || item.id) !== currentId
+    (item) => (item.variantId || item.id) !== currentId,
   );
 
   return (
@@ -103,7 +90,7 @@ export default function SpecificSweetPage() {
               {sweet.rating ? (
                 <>
                   <span className="text-yellow-500">
-                    {renderStars(sweet.rating.value)}
+                    {RenderStars(sweet.rating.value)}
                   </span>{" "}
                   ({sweet.rating.value} / 5, {sweet.rating.reviews} reviews)
                 </>
@@ -136,6 +123,12 @@ export default function SpecificSweetPage() {
 
           <button
             onClick={() => {
+              if (!user) {
+                toast.error("Please login to add items to cart");
+                navigate("/login");
+                return;
+              }
+
               addToCart(sweet);
               toast.success(`✅ ${sweet.name} added to cart!`);
               navigate("/cart");
@@ -149,8 +142,8 @@ export default function SpecificSweetPage() {
 
       {/* RECOMMENDATIONS */}
       {recommendations.length > 0 && (
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-6">
+        <section className="mt-20">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8">
             Recommended {sweet.category}
           </h2>
 
@@ -159,93 +152,75 @@ export default function SpecificSweetPage() {
               <Link
                 to={`/foods/sweet/${item.variantId || item.id}`}
                 key={item.variantId || item.id}
-                className="border rounded-xl p-4 hover:shadow-lg transition"
+                className="group bg-white rounded-2xl overflow-hidden
+                     shadow-sm hover:shadow-xl
+                     transition-all duration-300"
               >
-                <img
-                  src={item.image || item.photoURL || item.photoUrl}
-                  alt={item.name}
-                  className="h-40 w-full object-cover rounded-lg"
-                />
-                <h3 className="mt-3 font-semibold">{item.name}</h3>
-                <p className="text-sm text-gray-600">{item.uspDescription}</p>
-                <p className="mt-1 text-yellow-500">
-                  {item.rating ? (
-                    <>
-                      {renderStars(item.rating.value)} ({item.rating.value})
-                    </>
-                  ) : (
-                    "No rating"
-                  )}
-                </p>
+                {/* Image */}
+                <div className="overflow-hidden">
+                  <img
+                    src={item.image || item.photoURL || item.photoUrl}
+                    alt={item.name}
+                    className="h-40 w-full object-cover
+                         group-hover:scale-105
+                         transition-transform duration-300"
+                  />
+                </div>
 
-                <p className="mt-2 font-bold text-green-600">
-                  {item.basePrice ? (
-                    <>
-                      ₹{item.basePrice ?? 0}
-                      <span className="line-through text-gray-500 ml-2">
-                        ₹{item.discountedPrice ?? 0}
-                      </span>
-                      <span className="ml-2 text-red-500 font-semibold">
-                        ({item.discountPercentage ?? 0}% OFF)
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-gray-500 font-semibold">
-                      basePrice not available
+                {/* Content */}
+                <div className="p-4 space-y-1">
+                  <h3 className="font-semibold leading-snug">{item.name}</h3>
+
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {item.uspDescription}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-yellow-500 text-sm">
+                      {item.rating ? (
+                        <>
+                          {RenderStars(item.rating.value)}{" "}
+                          <span className="text-gray-500">
+                            ({item.rating.value})
+                          </span>
+                        </>
+                      ) : (
+                        "No rating"
+                      )}
                     </span>
-                  )}
-                </p>
+                  </div>
+
+                  {/* Price */}
+                  <div className="pt-2">
+                    {item.basePrice ? (
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-bold text-green-600">
+                          ₹{item.basePrice ?? 0}
+                        </span>
+
+                        <span className="line-through text-gray-400 text-sm">
+                          ₹{item.discountedPrice ?? 0}
+                        </span>
+
+                        <span className="text-red-500 text-sm font-semibold">
+                          ({item.discountPercentage ?? 0}% OFF)
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-gray-500 font-semibold text-sm">
+                        basePrice not available
+                      </span>
+                    )}
+                  </div>
+                </div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
       {/* FULL SWEETS MENU */}
-      {otherFoods.length > 0 && (
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-6">All Foods</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {otherFoods.map((item) => (
-              <Link
-                to={`/foods/view-all-hits/${item.variantId}`}
-                key={item.variantId}
-                className="border rounded-xl p-4 hover:shadow-lg transition"
-              >
-                <img
-                  src={item.photoURL}
-                  alt={item.name}
-                  className="h-40 w-full object-cover rounded-lg"
-                />
-                <h3 className="mt-3 font-semibold">{item.name}</h3>
-                <p className="text-sm text-gray-600">{item.usp || ""}</p>
-                <p className="mt-1 text-yellow-500">
-                  {renderStars(item.rating?.value || 0)} (
-                  {item.rating?.value || 0})
-                </p>
-                <p className="mt-2 font-bold text-green-600">
-                  {item.price ? (
-                    <>
-                      ₹{item.price.mrp ?? 0}
-                      <span className="line-through text-gray-500 ml-2">
-                        ₹{item.price.discountedPrice ?? 0}
-                      </span>
-                      <span className="ml-2 text-red-500 font-semibold">
-                        ({item.price.discountPercent ?? 0}% OFF)
-                      </span>
-                    </>
-                  ) : (
-                    <span className="text-gray-500 font-semibold">
-                      basePrice not available
-                    </span>
-                  )}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      <FullMenu />
     </div>
   );
 }

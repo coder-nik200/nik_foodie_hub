@@ -85,39 +85,57 @@ const Drinks = () => {
       {/* Scroll Container */}
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto scroll-smooth no-scrollbar select-none"
+        className="flex gap-4 sm:gap-5 overflow-x-auto scroll-smooth no-scrollbar select-none py-2"
       >
         {food.map((item) => (
           <div
             key={item.variantId}
-            className="w-[15rem] sm:w-[16rem] md:w-[18rem] bg-white rounded-lg p-3 flex-shrink-0"
+            className="w-[15rem] sm:w-[16rem] md:w-[18rem] 
+                 bg-white rounded-2xl p-3 
+                 shadow-sm hover:shadow-lg 
+                 transition-all duration-300 
+                 flex-shrink-0 group"
           >
-            <Link to={`/foods/drinks/${item.variantId}`} key={item.id}>
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-32 sm:h-36 md:h-40 object-cover rounded-2xl"
-              />
+            <Link to={`/foods/drinks/${item.variantId}`}>
+              {/* Image */}
+              <div className="overflow-hidden rounded-xl">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-32 sm:h-36 md:h-40 
+                       object-cover 
+                       group-hover:scale-105 
+                       transition-transform duration-300"
+                />
+              </div>
 
-              <h3 className="font-medium mt-2 text-sm sm:text-xl md:text-lg">
-                {item.name.length > 30
-                  ? item.name.slice(0, 30) + "..."
-                  : item.name}
-              </h3>
+              {/* Content */}
+              <div className="mt-3 space-y-1">
+                <h3 className="font-semibold text-sm sm:text-base md:text-lg leading-snug">
+                  {item.name.length > 30
+                    ? item.name.slice(0, 30) + "..."
+                    : item.name}
+                </h3>
 
-              <p className="text-xs sm:text-sm text-gray-600 mt-1">
-                {item.weight} | {item.pieces} pcs | Serves {item.serves}
-              </p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {item.weight} • {item.pieces} pcs • Serves {item.serves}
+                </p>
 
-              <p className="font-semibold mt-2 text-sm sm:text-base md:text-base">
-                ₹{item.discountedPrice}
-                <span className="text-gray-400 line-through ml-1">
-                  ₹{item.basePrice}
-                </span>
-                <span className="text-green-600 ml-1">
-                  ({item.discountPercentage}% OFF)
-                </span>
-              </p>
+                {/* Price */}
+                <div className="flex items-center flex-wrap gap-1 mt-2">
+                  <span className="font-bold text-sm sm:text-base text-gray-900">
+                    ₹{item.discountedPrice}
+                  </span>
+
+                  <span className="text-xs sm:text-sm text-gray-400 line-through">
+                    ₹{item.basePrice}
+                  </span>
+
+                  <span className="text-xs sm:text-sm text-green-600 font-semibold">
+                    {item.discountPercentage}% OFF
+                  </span>
+                </div>
+              </div>
             </Link>
           </div>
         ))}
@@ -125,11 +143,19 @@ const Drinks = () => {
         {/* View All Card */}
         <div
           onClick={() => navigate("/foods/drinks")}
-          className="min-w-[150px] sm:min-w-[170px] md:min-w-[190px] bg-[#faf7f2] 
-                     flex items-center justify-center rounded-lg text-orange-500 
-                     font-bold text-sm sm:text-base md:text-lg cursor-pointer flex-shrink-0"
+          className="min-w-[160px] sm:min-w-[180px] md:min-w-[200px]
+               bg-gradient-to-br from-orange-50 to-orange-100
+               flex flex-col items-center justify-center
+               rounded-2xl 
+               border border-orange-200
+               text-orange-600
+               font-semibold text-sm sm:text-base md:text-lg
+               cursor-pointer flex-shrink-0
+               hover:shadow-md hover:scale-[1.02]
+               transition-all duration-300"
         >
-          View All →
+          <span>View All</span>
+          <span className="text-xl mt-1">→</span>
         </div>
       </div>
     </section>

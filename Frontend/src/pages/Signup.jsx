@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
+import api from "../api/axios";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Signup() {
     }
 
     try {
-      const response = await axios.post("/signup", formData);
+      const response = await api.post("/signup", formData);
 
       console.log("Signup successfully: ", response.data);
       toast.success("Signup successfully ✅");
