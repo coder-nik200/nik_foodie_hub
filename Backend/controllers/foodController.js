@@ -1,50 +1,20 @@
-// import axios from "axios";
-// const fastFoodData = require("../data/fastFoodData");
-
-// import fastFoodData from "../data/fastFoodData.json";
-// const Food = require("../models/foodModel");
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-
-// const getFoodOptions = async (req, res) => {
-//   try {
-//     const categories = ["pizza", "burger", "biryani", "dessert", "pasta"];
-
-//     const requests = categories.map((cat, index) =>
-//       axios.get(`https://foodish-api.com/api/images/${cat}`).then((r) => ({
-//         info: {
-//           id: index + 1,
-//           name: cat.toUpperCase(),
-//           imageUrl: r.data.image,
-//         },
-//       }))
-//     );
-
-//     const data = await Promise.all(requests);
-
-//     res.json({ data });
-//   } catch (error) {
-//     res.status(500).json({ message: "Food API failed" });
-//   }
-// };
-
 import fs from "fs";
 
 // Load JSON safely in ESM
 const fastFoodData = JSON.parse(
-  fs.readFileSync(new URL("../data/fastFoodData.json", import.meta.url))
+  fs.readFileSync(new URL("../data/fastFoodData.json", import.meta.url)),
 );
 const currentHits = JSON.parse(
-  fs.readFileSync(new URL("../data/currenthits.json", import.meta.url))
+  fs.readFileSync(new URL("../data/currenthits.json", import.meta.url)),
 );
 const sweetsData = JSON.parse(
-  fs.readFileSync(new URL("../data/sweetsData.json", import.meta.url))
+  fs.readFileSync(new URL("../data/sweetsData.json", import.meta.url)),
 );
 const drinksData = JSON.parse(
-  fs.readFileSync(new URL("../data/drinksData.json", import.meta.url))
+  fs.readFileSync(new URL("../data/drinksData.json", import.meta.url)),
 );
 const foodData = JSON.parse(
-  fs.readFileSync(new URL("../data/foodData.json", import.meta.url))
+  fs.readFileSync(new URL("../data/foodData.json", import.meta.url)),
 );
 
 // Get all food options
@@ -165,7 +135,7 @@ const getSpecificItem = async (req, res) => {
   const categoryId = Number(req.params.id);
 
   const filteredItems = foodData.products.filter(
-    (item) => item.categoryId === categoryId
+    (item) => item.categoryId === categoryId,
   );
 
   res.json({
@@ -185,60 +155,3 @@ export {
   getSpecificSweet,
   getSpecificDrink,
 };
-
-// import Food from "../models/Food.js";
-
-// const getFoodOptions = async (req, res) => {
-//   try {
-//     const foods = await Food.find({ isAvailable: true });
-//     res.status(200).json({ data: foods });
-//   } catch (error) {
-//     res.status(500).json({ message: "Food API failed" });
-//   }
-// };
-
-// const getFoodById = async (req, res) => {
-//   try {
-//     const food = await Food.findById(req.params.id);
-
-//     if (!food) {
-//       return res.status(404).json({ message: "Food not found" });
-//     }
-
-//     res.status(200).json({ product: food });
-//   } catch (error) {
-//     res.status(500).json({ message: "Invalid food ID" });
-//   }
-// };
-
-// const getFoodByCategory = async (req, res) => {
-//   const { category } = req.params;
-
-//   try {
-//     const foods = await Food.find({ category });
-
-//     res.status(200).json({
-//       total: foods.length,
-//       products: foods,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: "Food API failed" });
-//   }
-// };
-
-// const getCurrentHits = async (req, res) => {
-//   try {
-//     const foods = await Food.find({ isTrending: true });
-//     res.status(200).json({ products: foods });
-//   } catch (error) {
-//     res.status(500).json({ message: "Food API failed" });
-//   }
-// };
-
-// const getSweetFood = (req, res) =>
-//   getFoodByCategory({ ...req, params: { category: "dessert" } }, res);
-
-// const getDrinks = (req, res) =>
-//   getFoodByCategory({ ...req, params: { category: "beverages" } }, res);
-
-// export { getFoodOptions, getFoodById, getCurrentHits, getSweetFood, getDrinks };

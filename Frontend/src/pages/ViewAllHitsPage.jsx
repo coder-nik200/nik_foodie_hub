@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 import { RenderStars } from "../components/RenderStarts";
+import FullMenu from "../components/FullMenu";
 
 export default function ViewAllHitsPage() {
   const { id } = useParams();
@@ -39,8 +40,8 @@ export default function ViewAllHitsPage() {
       .catch(() => {});
   }, [id]);
 
-  if (error) return <p className="text-center mt-10">{error}</p>;
-  if (!food) return <p className="text-center mt-10">Loading...</p>;
+  if (error) return <p className="text-center mt-20 text-red-500">{error}</p>;
+  if (!food) return <p className="text-center mt-20">Loading...</p>;
 
   const recommendations = allFoods.filter(
     (item) =>
@@ -49,196 +50,159 @@ export default function ViewAllHitsPage() {
       item.variantId !== food.variantId,
   );
 
-  const otherFoods = allFoods.filter(
-    (item) => item.variantId && item.variantId !== food.variantId,
-  );
-
   return (
-    <div className="min-h-screen px-3 sm:px-6 md:px-10 py-6 max-w-6xl mx-auto">
-      {/* FOOD DETAILS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-        <img
-          src={food.photoURL}
-          alt={food.name}
-          className="w-full max-w-sm sm:max-w-md mx-auto rounded-xl shadow-lg"
-        />
-
-        <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-            {food.name}
-          </h1>
-
-          <p className="text-gray-600 mt-2 text-sm sm:text-base">{food.usp}</p>
-
-          <div className="mt-4 space-y-1 text-sm sm:text-base">
-            <p>
-              <strong>Category:</strong> {food.category}
-            </p>
-            <p>
-              <strong>Weight:</strong> {food.weight}
-            </p>
-            <p>
-              <strong>Pieces:</strong> {food.pieces}
-            </p>
-            <p>
-              <strong>Serves:</strong> {food.serves}
-            </p>
-
-            <p>
-              <strong>Rating:</strong>{" "}
-              <span className="text-yellow-500">
-                {RenderStars(food.rating?.value)}
-              </span>{" "}
-              {food.rating
-                ? `(${food.rating.value} / 5, ${food.rating.reviews} reviews)`
-                : "(No ratings yet)"}
-            </p>
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        {/* ================= FOOD DETAILS ================= */}
+        <div
+          className="bg-white rounded-3xl shadow-lg p-6 md:p-10
+                        grid grid-cols-1 md:grid-cols-2 gap-10"
+        >
+          {/* Image */}
+          <div className="flex justify-center">
+            <img
+              src={food.photoURL}
+              alt={food.name}
+              className="w-full max-w-md rounded-2xl shadow-md
+                         hover:scale-105 transition-transform duration-300"
+            />
           </div>
 
-          {/* PRICE */}
-          <div className="mt-5">
-            <span className="text-2xl sm:text-3xl font-bold text-green-600">
-              ₹{food.price?.discountedPrice ?? food.discountedPrice ?? 0}
-            </span>
+          {/* Content */}
+          <div className="flex flex-col justify-between">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-extrabold">
+                {food.name}
+              </h1>
 
-            <span className="line-through text-gray-500 ml-3">
-              ₹{food.price?.mrp ?? food.basePrice ?? 0}
-            </span>
+              <p className="text-gray-600 mt-3 leading-relaxed">{food.usp}</p>
 
-            <span className="ml-3 text-red-500 font-semibold">
-              ({food.price?.discountPercent ?? food.discountPercentage ?? 0}%
-              OFF)
-            </span>
+              {/* Info */}
+              <div className="mt-6 space-y-2 text-sm md:text-base">
+                <p>
+                  <strong>Category:</strong> {food.category}
+                </p>
+                <p>
+                  <strong>Weight:</strong> {food.weight}
+                </p>
+                <p>
+                  <strong>Pieces:</strong> {food.pieces}
+                </p>
+                <p>
+                  <strong>Serves:</strong> {food.serves}
+                </p>
+
+                <p className="flex items-center gap-2">
+                  <strong>Rating:</strong>
+                  {food.rating ? (
+                    <>
+                      <span className="text-yellow-500">
+                        {RenderStars(food.rating.value)}
+                      </span>
+                      <span className="text-gray-500">
+                        ({food.rating.value}/5 · {food.rating.reviews})
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-gray-400">No ratings yet</span>
+                  )}
+                </p>
+              </div>
+
+              {/* Price */}
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <span className="text-3xl font-bold text-green-600">
+                  ₹{food.price?.discountedPrice ?? food.discountedPrice ?? 0}
+                </span>
+
+                <span className="line-through text-gray-400">
+                  ₹{food.price?.mrp ?? food.basePrice ?? 0}
+                </span>
+
+                <span className="text-red-500 font-semibold">
+                  ({food.price?.discountPercent ?? food.discountPercentage ?? 0}
+                  % OFF)
+                </span>
+              </div>
+            </div>
+
+            {/* Add to Cart */}
+            <button
+              onClick={() => {
+                if (!user) {
+                  toast.error("Please login to add items to cart");
+                  navigate("/login");
+                  return;
+                }
+
+                addToCart(food);
+                toast.success(`${food.name} added to cart`);
+                navigate("/cart");
+              }}
+              className="mt-8 w-full md:w-fit px-8 py-4
+                         bg-orange-500 text-white font-semibold
+                         rounded-xl shadow-md
+                         hover:bg-orange-600 hover:shadow-lg
+                         transition-all"
+            >
+              Add to Cart
+            </button>
           </div>
+        </div>
 
-          <button
-            onClick={() => {
-              if (!user) {
-                toast.error("Please login to add items to cart");
-                navigate("/login");
-                return;
-              }
+        {/* ================= RECOMMENDATIONS ================= */}
+        {recommendations.length > 0 && (
+          <section className="mt-20">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8">
+              Recommended {food.category}
+            </h2>
 
-              addToCart(food);
-              toast.success(`✅ ${food.name} added to cart!`);
-              navigate("/cart");
-            }}
-            className="mt-6 w-full sm:w-auto px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
-          >
-            Add to Cart
-          </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              {recommendations.map((item) => (
+                <Link
+                  to={`/foods/view-all-hits/${item.variantId}`}
+                  key={item.variantId}
+                  className="bg-white rounded-2xl overflow-hidden
+                             shadow-sm hover:shadow-xl
+                             hover:-translate-y-1
+                             transition-all duration-300"
+                >
+                  <img
+                    src={item.photoURL}
+                    alt={item.name}
+                    className="h-44 w-full object-cover"
+                  />
+
+                  <div className="p-4 space-y-2">
+                    <h3 className="font-semibold">{item.name}</h3>
+
+                    <p className="text-sm text-gray-600 line-clamp-2">
+                      {item.usp}
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-yellow-500 text-sm">
+                        {item.rating
+                          ? RenderStars(item.rating.value)
+                          : "No rating"}
+                      </span>
+
+                      <span className="font-bold text-green-600">
+                        ₹{item.price?.discountedPrice ?? 0}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ================= FULL MENU ================= */}
+        <div className="mt-24">
+          <FullMenu />
         </div>
       </div>
-
-      {/* RECOMMENDATIONS */}
-      {recommendations.length > 0 && (
-        <section className="mt-16">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-8">
-            Recommended {food.category}
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {recommendations.map((item) => (
-              <Link
-                to={`/foods/view-all-hits/${item.variantId}`}
-                key={item.variantId}
-                className="group bg-white rounded-2xl overflow-hidden
-                     shadow-sm hover:shadow-xl
-                     transition-all duration-300"
-              >
-                {/* Image */}
-                <div className="overflow-hidden">
-                  <img
-                    src={item.photoURL}
-                    alt={item.name}
-                    className="h-36 sm:h-40 w-full object-cover
-                         group-hover:scale-105
-                         transition-transform duration-300"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-4 space-y-1">
-                  <h3 className="font-semibold text-sm sm:text-base leading-snug">
-                    {item.name}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
-                    {item.usp}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <span className="text-yellow-500 text-sm">
-                      {RenderStars(item.rating?.value)}{" "}
-                      <span className="text-gray-500">
-                        ({item.rating?.value || 0})
-                      </span>
-                    </span>
-
-                    <span className="font-bold text-green-600">
-                      ₹{item.price?.discountedPrice || 0}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* FULL MENU */}
-      {otherFoods.length > 0 && (
-        <section className="mt-20">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-8">All Foods</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {otherFoods.map((item) => (
-              <Link
-                to={`/foods/view-all-hits/${item.variantId}`}
-                key={item.variantId}
-                className="group bg-white rounded-2xl overflow-hidden
-                     shadow-sm hover:shadow-xl
-                     transition-all duration-300"
-              >
-                {/* Image */}
-                <div className="overflow-hidden">
-                  <img
-                    src={item.photoURL}
-                    alt={item.name}
-                    className="h-36 sm:h-40 w-full object-cover
-                         group-hover:scale-105
-                         transition-transform duration-300"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-4 space-y-1">
-                  <h3 className="font-semibold text-sm sm:text-base leading-snug">
-                    {item.name}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
-                    {item.usp}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <span className="text-yellow-500 text-sm">
-                      {RenderStars(item.rating?.value)}{" "}
-                      <span className="text-gray-500">
-                        ({item.rating?.value || 0})
-                      </span>
-                    </span>
-
-                    <span className="font-bold text-green-600">
-                      ₹{item.price?.discountedPrice || 0}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
     </div>
   );
 }

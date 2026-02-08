@@ -4,22 +4,7 @@ import api from "../api/axios";
 import { UserContext } from "../useContext";
 import { IoArrowBack } from "react-icons/io5";
 import toast from "react-hot-toast";
-
-// Helper function to display stars
-const renderStars = (ratingValue) => {
-  if (!ratingValue) return "☆☆☆☆☆";
-  const fullStars = Math.floor(ratingValue);
-  const halfStar = ratingValue - fullStars >= 0.5;
-  const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
-  return (
-    <>
-      {"★".repeat(fullStars)}
-      {halfStar && "☆"}
-      {"☆".repeat(emptyStars)}
-    </>
-  );
-};
+import { RenderStars } from "../components/RenderStarts";
 
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
@@ -180,7 +165,7 @@ export default function SearchPage() {
 
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-yellow-500">
-                        {renderStars(getRating(product))}
+                        {RenderStars(getRating(product))}
                       </span>
                       <span className="text-sm text-gray-600 dark:text-gray-400">
                         {getRating(product).toFixed(1)}

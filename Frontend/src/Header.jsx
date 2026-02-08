@@ -300,7 +300,7 @@ export default function Header() {
 
                   <button
                     onClick={async () => {
-                      await api.get("/auth/logout", { withCredentials: true });
+                      await api.get("/logout", { withCredentials: true });
                       window.location.reload();
                     }}
                     className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200 transition"

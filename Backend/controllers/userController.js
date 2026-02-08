@@ -40,35 +40,6 @@ const getSignup = async (req, res) => {
   }
 };
 
-// const getLogin = async (req, res) => {
-//   const { email, password } = req.body;
-
-//   const user = await User.findOne({ email });
-
-//   if (!user) {
-//     return res.status(404).json({ message: "User not found" });
-//   }
-
-//   const isPasswordMatch = await bcrypt.compare(password, user.password);
-
-//   if (!isPasswordMatch) {
-//     return res.status(401).json({ message: "Invalid credentials" });
-//   }
-
-//   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-//     expiresIn: "1d",
-//   });
-
-//   res.cookie("token", token, {
-//     httpOnly: true,
-//     // secure: true,
-//     secure: false,
-//     sameSite: "lax",
-//   });
-
-//   res.json({ success: true, message: "Login successful", user });
-// };
-
 const getLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -98,4 +69,8 @@ const getLogin = async (req, res) => {
   }
 };
 
-module.exports = { getSignup, getLogin };
+const Logut = (req, res) => {
+  res.cookie("token", "").json("Logged out");
+};
+
+module.exports = { getSignup, getLogin, Logut };

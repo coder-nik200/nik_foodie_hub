@@ -1,11 +1,8 @@
 //External Module
 const express = require("express");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -13,7 +10,6 @@ const app = express();
 //Local Module
 const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
-const hostRouter = require("./routes/hostRouter");
 const foodRouter = require("./routes/foodRouter");
 const corsOptions = require("./config/cors");
 
@@ -26,7 +22,6 @@ app.use("/static", express.static("data"));
 
 app.use("/auth", authRouter);
 app.use(userRouter);
-app.use("/host", hostRouter);
 app.use("/foods", foodRouter);
 
 //Database connection
