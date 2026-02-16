@@ -14,7 +14,7 @@ import { FaUserCircle } from "react-icons/fa";
 export default function Header() {
   const { user, cart } = useContext(UserContext);
   const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
+    localStorage.getItem("theme") === "dark",
   );
   const [showMenu, setShowMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,7 +53,7 @@ export default function Header() {
           api.get("/foods/sweet").catch(() => ({ data: { products: [] } })),
           api.get("/foods/drinks").catch(() => ({ data: { products: [] } })),
           api.get("/foods/food-options").catch(() => ({ data: { data: [] } })),
-        ]
+        ],
       );
 
       const hits = hitsRes.data.products || [];
@@ -76,7 +76,7 @@ export default function Header() {
             product.usp?.toLowerCase().includes(searchLower) ||
             product.uspDescription?.toLowerCase().includes(searchLower) ||
             product.category?.toLowerCase().includes(searchLower) ||
-            product.slug?.toLowerCase().includes(searchLower)
+            product.slug?.toLowerCase().includes(searchLower),
         )
         .slice(0, 6);
 
@@ -291,7 +291,7 @@ export default function Header() {
                 <div className="absolute right-0 mt-38 w-48 bg-white rounded-xl shadow-xl border border-gray-300 overflow-hidden z-50">
                   <div className="px-4 py-3">
                     <p className="font-semibold text-black-800 truncate">
-                      {user.firstName || user.email || "User"}
+                      {user.name || user.email || "User"}
                     </p>
                   </div>
 

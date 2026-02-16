@@ -24,7 +24,7 @@
 
   "products": [
     {
-      "id": "burger_1",
+      "id": "696fc163ba31e68e0a7a03b7",
       "name": "Classic Veg Burger",
       "categoryId": 1,
       "slug": "classic-veg-burger",
@@ -38,7 +38,7 @@
       "rating": { "value": 4.2 }
     },
     {
-      "id": "burger_2",
+      "id": "696fc163ba31e68e0a7a03b8",
       "name": "Cheese Burger",
       "categoryId": 1,
       "slug": "cheese-burger",
@@ -52,7 +52,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "burger_3",
+      "id": "696fc164ba31e68e0a7a03b9",
       "name": "Double Patty Burger",
       "categoryId": 1,
       "slug": "double-patty-burger",
@@ -66,7 +66,7 @@
       "rating": { "value": 4.6 }
     },
     {
-      "id": "burger_4",
+      "id": "696fc164ba31e68e0a7a03ba",
       "name": "Chicken Burger",
       "categoryId": 1,
       "slug": "chicken-burger",
@@ -80,7 +80,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "burger_5",
+      "id": "696fc164ba31e68e0a7a03bb",
       "name": "Spicy Burger",
       "categoryId": 1,
       "slug": "spicy-burger",
@@ -94,7 +94,7 @@
       "rating": { "value": 4.1 }
     },
     {
-      "id": "burger_6",
+      "id": "696fc164ba31e68e0a7a03bc",
       "name": "Loaded Burger",
       "categoryId": 1,
       "slug": "loaded-burger",
@@ -109,7 +109,7 @@
     },
 
     {
-      "id": "pizza_1",
+      "id": "696fc164ba31e68e0a7a03bd",
       "name": "Margherita Pizza",
       "categoryId": 2,
       "slug": "margherita-pizza",
@@ -123,7 +123,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "pizza_2",
+      "id": "696fc164ba31e68e0a7a03be",
       "name": "Farmhouse Pizza",
       "categoryId": 2,
       "slug": "farmhouse-pizza",
@@ -137,7 +137,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "pizza_3",
+      "id": "696fc164ba31e68e0a7a03bf",
       "name": "Cheese Burst Pizza",
       "categoryId": 2,
       "slug": "cheese-burst-pizza",
@@ -151,7 +151,7 @@
       "rating": { "value": 4.6 }
     },
     {
-      "id": "pizza_4",
+      "id": "696fc164ba31e68e0a7a03c0",
       "name": "Pepperoni Pizza",
       "categoryId": 2,
       "slug": "pepperoni-pizza",
@@ -165,7 +165,7 @@
       "rating": { "value": 4.7 }
     },
     {
-      "id": "pizza_5",
+      "id": "696fc164ba31e68e0a7a03c1",
       "name": "BBQ Chicken Pizza",
       "categoryId": 2,
       "slug": "bbq-chicken-pizza",
@@ -179,7 +179,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "pizza_6",
+      "id": "696fc164ba31e68e0a7a03c2",
       "name": "Paneer Tikka Pizza",
       "categoryId": 2,
       "slug": "paneer-tikka-pizza",
@@ -194,7 +194,7 @@
     },
 
     {
-      "id": "fries_1",
+      "id": "696fc164ba31e68e0a7a03c3",
       "name": "Classic Salted Fries",
       "categoryId": 3,
       "slug": "classic-salted-fries",
@@ -208,7 +208,7 @@
       "rating": { "value": 4.1 }
     },
     {
-      "id": "fries_2",
+      "id": "696fc164ba31e68e0a7a03c4",
       "name": "Peri Peri Fries",
       "categoryId": 3,
       "slug": "peri-peri-fries",
@@ -222,7 +222,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "fries_3",
+      "id": "696fc164ba31e68e0a7a03c5",
       "name": "Cheese Fries",
       "categoryId": 3,
       "slug": "cheese-fries",
@@ -236,7 +236,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "fries_4",
+      "id": "696fc164ba31e68e0a7a03c6",
       "name": "Loaded Fries",
       "categoryId": 3,
       "slug": "loaded-fries",
@@ -250,7 +250,7 @@
       "rating": { "value": 4.6 }
     },
     {
-      "id": "fries_5",
+      "id": "696fc164ba31e68e0a7a03c7",
       "name": "Garlic Fries",
       "categoryId": 3,
       "slug": "garlic-fries",
@@ -264,7 +264,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "fries_6",
+      "id": "696fc164ba31e68e0a7a03c8",
       "name": "Crinkle Cut Fries",
       "categoryId": 3,
       "slug": "crinkle-cut-fries",
@@ -279,7 +279,7 @@
     },
 
     {
-      "id": "sandwich_1",
+      "id": "696fc164ba31e68e0a7a03c9",
       "name": "Veg Sandwich",
       "slug": "veg-sandwich",
       "categoryId": 4,
@@ -293,7 +293,7 @@
       "rating": { "value": 4.1 }
     },
     {
-      "id": "sandwich_2",
+      "id": "696fc164ba31e68e0a7a03ca",
       "name": "Grilled Cheese Sandwich",
       "slug": "grilled-cheese-sandwich",
       "categoryId": 4,
@@ -307,7 +307,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "sandwich_3",
+      "id": "696fc164ba31e68e0a7a03cb",
       "name": "Club Sandwich",
       "slug": "club-sandwich",
       "categoryId": 4,
@@ -321,7 +321,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "sandwich_4",
+      "id": "696fc164ba31e68e0a7a03cc",
       "name": "Chicken Sandwich",
       "slug": "chicken-sandwich",
       "categoryId": 4,
@@ -335,7 +335,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "sandwich_5",
+      "id": "696fc164ba31e68e0a7a03cd",
       "name": "Paneer Sandwich",
       "slug": "paneer-sandwich",
       "categoryId": 4,
@@ -349,7 +349,7 @@
       "rating": { "value": 4.2 }
     },
     {
-      "id": "sandwich_6",
+      "id": "696fc164ba31e68e0a7a03ce",
       "name": "Corn Sandwich",
       "slug": "corn-sandwich",
       "categoryId": 4,
@@ -364,7 +364,7 @@
     },
 
     {
-      "id": "wings_1",
+      "id": "696fc164ba31e68e0a7a03cf",
       "name": "Classic Crispy Chicken Wings",
       "slug": "classic-crispy-chicken-wings",
       "categoryId": 5,
@@ -378,7 +378,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "wings_2",
+      "id": "696fc164ba31e68e0a7a03d0",
       "name": "Spicy Hot Chicken Wings",
       "slug": "spicy-hot-chicken-wings",
       "categoryId": 5,
@@ -392,7 +392,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "wings_3",
+      "id": "696fc164ba31e68e0a7a03d1",
       "name": "BBQ Chicken Wings",
       "slug": "bbq-chicken-wings",
       "categoryId": 5,
@@ -406,7 +406,7 @@
       "rating": { "value": 4.6 }
     },
     {
-      "id": "wings_4",
+      "id": "696fc164ba31e68e0a7a03d2",
       "name": "Garlic Butter Chicken Wings",
       "slug": "garlic-butter-chicken-wings",
       "categoryId": 5,
@@ -420,7 +420,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "wings_5",
+      "id": "696fc164ba31e68e0a7a03d3",
       "name": "Honey Glazed Chicken Wings",
       "slug": "honey-glazed-chicken-wings",
       "categoryId": 5,
@@ -434,7 +434,7 @@
       "rating": { "value": 4.7 }
     },
     {
-      "id": "wings_6",
+      "id": "696fc164ba31e68e0a7a03d4",
       "name": "Peri Peri Chicken Wings",
       "slug": "peri-peri-chicken-wings",
       "categoryId": 5,
@@ -449,7 +449,7 @@
     },
 
     {
-      "id": "taco_1",
+      "id": "696fc164ba31e68e0a7a03d5",
       "name": "Veg Taco",
       "slug": "veg-taco",
       "categoryId": 6,
@@ -463,7 +463,7 @@
       "rating": { "value": 4.2 }
     },
     {
-      "id": "taco_2",
+      "id": "696fc164ba31e68e0a7a03d6",
       "name": "Chicken Taco",
       "slug": "chicken-taco",
       "categoryId": 6,
@@ -477,7 +477,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "taco_3",
+      "id": "696fc164ba31e68e0a7a03d7",
       "name": "Cheese Taco",
       "slug": "cheese-taco",
       "categoryId": 6,
@@ -491,7 +491,7 @@
       "rating": { "value": 4.1 }
     },
     {
-      "id": "taco_4",
+      "id": "696fc164ba31e68e0a7a03d8",
       "name": "Spicy Taco",
       "slug": "spicy-taco",
       "categoryId": 6,
@@ -505,7 +505,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "taco_5",
+      "id": "696fc164ba31e68e0a7a03d9",
       "name": "Loaded Taco",
       "slug": "loaded-taco",
       "categoryId": 6,
@@ -519,7 +519,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "taco_6",
+      "id": "696fc164ba31e68e0a7a03da",
       "name": "Mexican Taco",
       "slug": "mexican-taco",
       "categoryId": 6,
@@ -534,7 +534,7 @@
     },
 
     {
-      "id": "wrap_1",
+      "id": "696fc164ba31e68e0a7a03db",
       "name": "Veg Wrap",
       "slug": "veg-wrap",
       "categoryId": 7,
@@ -548,7 +548,7 @@
       "rating": { "value": 4.1 }
     },
     {
-      "id": "wrap_2",
+      "id": "696fc164ba31e68e0a7a03dc",
       "name": "Paneer Wrap",
       "slug": "paneer-wrap",
       "categoryId": 7,
@@ -562,7 +562,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "wrap_3",
+      "id": "696fc164ba31e68e0a7a03dd",
       "name": "Chicken Wrap",
       "slug": "chicken-wrap",
       "categoryId": 7,
@@ -576,7 +576,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "wrap_4",
+      "id": "696fc164ba31e68e0a7a03de",
       "name": "Cheese Wrap",
       "slug": "cheese-wrap",
       "categoryId": 7,
@@ -590,7 +590,7 @@
       "rating": { "value": 4.2 }
     },
     {
-      "id": "wrap_5",
+      "id": "696fc164ba31e68e0a7a03df",
       "name": "Spicy Wrap",
       "slug": "spicy-wrap",
       "categoryId": 7,
@@ -604,7 +604,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "wrap_6",
+      "id": "696fc164ba31e68e0a7a03e0",
       "name": "Loaded Wrap",
       "slug": "loaded-wrap",
       "categoryId": 7,
@@ -619,7 +619,7 @@
     },
 
     {
-      "id": "donut_1",
+      "id": "696fc164ba31e68e0a7a03e1",
       "name": "Chocolate Donut",
       "slug": "chocolate-donut",
       "categoryId": 8,
@@ -633,7 +633,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "donut_2",
+      "id": "696fc164ba31e68e0a7a03e2",
       "name": "Strawberry Donut",
       "slug": "strawberry-donut",
       "categoryId": 8,
@@ -647,7 +647,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "donut_3",
+      "id": "696fc164ba31e68e0a7a03e3",
       "name": "Glazed Donut",
       "slug": "glazed-donut",
       "categoryId": 8,
@@ -661,7 +661,7 @@
       "rating": { "value": 4.2 }
     },
     {
-      "id": "donut_4",
+      "id": "696fc164ba31e68e0a7a03e4",
       "name": "Vanilla Donut",
       "slug": "vanilla-donut",
       "categoryId": 8,
@@ -675,7 +675,7 @@
       "rating": { "value": 4.1 }
     },
     {
-      "id": "donut_5",
+      "id": "696fc164ba31e68e0a7a03e5",
       "name": "Sprinkle Donut",
       "slug": "sprinkle-donut",
       "categoryId": 8,
@@ -689,7 +689,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "donut_6",
+      "id": "696fc164ba31e68e0a7a03e6",
       "name": "Caramel Donut",
       "slug": "caramel-donut",
       "categoryId": 8,
@@ -704,7 +704,7 @@
     },
 
     {
-      "id": "springroll_1",
+      "id": "696fc164ba31e68e0a7a03e7",
       "name": "Veg Spring Roll",
       "slug": "veg-spring-roll",
       "categoryId": 9,
@@ -718,7 +718,7 @@
       "rating": { "value": 4.2 }
     },
     {
-      "id": "springroll_2",
+      "id": "696fc164ba31e68e0a7a03e8",
       "name": "Cheese Spring Roll",
       "slug": "cheese-spring-roll",
       "categoryId": 9,
@@ -732,7 +732,7 @@
       "rating": { "value": 4.4 }
     },
     {
-      "id": "springroll_3",
+      "id": "696fc164ba31e68e0a7a03e9",
       "name": "Paneer Spring Roll",
       "slug": "paneer-spring-roll",
       "categoryId": 9,
@@ -746,7 +746,7 @@
       "rating": { "value": 4.5 }
     },
     {
-      "id": "springroll_4",
+      "id": "696fc164ba31e68e0a7a03ea",
       "name": "Chicken Spring Roll",
       "slug": "chicken-spring-roll",
       "categoryId": 9,
@@ -760,7 +760,7 @@
       "rating": { "value": 4.6 }
     },
     {
-      "id": "springroll_5",
+      "id": "696fc164ba31e68e0a7a03eb",
       "name": "Spicy Spring Roll",
       "slug": "spicy-spring-roll",
       "categoryId": 9,
@@ -774,7 +774,7 @@
       "rating": { "value": 4.3 }
     },
     {
-      "id": "springroll_6",
+      "id": "696fc164ba31e68e0a7a03ec",
       "name": "Crispy Golden Spring Roll",
       "slug": "crispy-golden-spring-roll",
       "categoryId": 9,
@@ -789,7 +789,7 @@
     },
 
     {
-      "id": "pavbhaji_1",
+      "id": "696fc164ba31e68e0a7a03ed",
       "name": "Butter Pav Bhaji",
       "slug": "butter-pav-bhaji",
       "categoryId": 10,
@@ -803,7 +803,7 @@
       "rating": 4.6
     },
     {
-      "id": "pavbhaji_2",
+      "id": "696fc164ba31e68e0a7a03ee",
       "name": "Cheese Pav Bhaji",
       "slug": "cheese-pav-bhaji",
       "categoryId": 10,
@@ -817,7 +817,7 @@
       "rating": 4.5
     },
     {
-      "id": "pavbhaji_3",
+      "id": "696fc164ba31e68e0a7a03ef",
       "name": "Jain Pav Bhaji",
       "slug": "jain-pav-bhaji",
       "categoryId": 10,
@@ -831,7 +831,7 @@
       "rating": 4.2
     },
     {
-      "id": "pavbhaji_4",
+      "id": "696fc164ba31e68e0a7a03f0",
       "name": "Spicy Pav Bhaji",
       "slug": "spicy-pav-bhaji",
       "categoryId": 10,
@@ -845,7 +845,7 @@
       "rating": 4.4
     },
     {
-      "id": "pavbhaji_5",
+      "id": "696fc164ba31e68e0a7a03f1",
       "name": "Paneer Pav Bhaji",
       "slug": "paneer-pav-bhaji",
       "categoryId": 10,
@@ -859,7 +859,7 @@
       "rating": 4.7
     },
     {
-      "id": "pavbhaji_6",
+      "id": "696fc164ba31e68e0a7a03f2",
       "name": "Special Pav Bhaji",
       "slug": "special-pav-bhaji",
       "categoryId": 10,
@@ -874,7 +874,7 @@
     },
 
     {
-      "id": "chowmein_1",
+      "id": "696fc164ba31e68e0a7a03f3",
       "name": "Veg Chowmein",
       "slug": "veg-chowmein",
       "categoryId": 11,
@@ -888,7 +888,7 @@
       "rating": { "value": 4.2, "reviews": null }
     },
     {
-      "id": "chowmein_2",
+      "id": "696fc164ba31e68e0a7a03f4",
       "name": "Chicken Chowmein",
       "slug": "chicken-chowmein",
       "categoryId": 11,
@@ -902,7 +902,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "chowmein_3",
+      "id": "696fc164ba31e68e0a7a03f5",
       "name": "Hakka Noodles",
       "slug": "hakka-noodles",
       "categoryId": 11,
@@ -916,7 +916,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "chowmein_4",
+      "id": "696fc164ba31e68e0a7a03f6",
       "name": "Schezwan Noodles",
       "slug": "schezwan-noodles",
       "categoryId": 11,
@@ -930,7 +930,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "chowmein_5",
+      "id": "696fc164ba31e68e0a7a03f7",
       "name": "Paneer Chowmein",
       "slug": "paneer-chowmein",
       "categoryId": 11,
@@ -944,7 +944,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "chowmein_6",
+      "id": "696fc164ba31e68e0a7a03f8",
       "name": "Mixed Chowmein",
       "slug": "mixed-chowmein",
       "categoryId": 11,
@@ -959,7 +959,7 @@
     },
 
     {
-      "id": "milkshake_1",
+      "id": "696fc164ba31e68e0a7a03f9",
       "name": "Chocolate Milkshake",
       "slug": "chocolate-milkshake",
       "categoryId": 12,
@@ -973,7 +973,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "milkshake_2",
+      "id": "696fc164ba31e68e0a7a03fa",
       "name": "Vanilla Milkshake",
       "slug": "vanilla-milkshake",
       "categoryId": 12,
@@ -987,7 +987,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "milkshake_3",
+      "id": "696fc164ba31e68e0a7a03fb",
       "name": "Strawberry Milkshake",
       "slug": "strawberry-milkshake",
       "categoryId": 12,
@@ -1001,7 +1001,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "milkshake_4",
+      "id": "696fc164ba31e68e0a7a03fc",
       "name": "Oreo Milkshake",
       "slug": "oreo-milkshake",
       "categoryId": 12,
@@ -1015,7 +1015,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "milkshake_5",
+      "id": "696fc164ba31e68e0a7a03fd",
       "name": "Mango Milkshake",
       "slug": "mango-milkshake",
       "categoryId": 12,
@@ -1029,7 +1029,7 @@
       "rating": { "value": 4.2, "reviews": null }
     },
     {
-      "id": "milkshake_6",
+      "id": "696fc164ba31e68e0a7a03fe",
       "name": "KitKat Milkshake",
       "slug": "kitkat-milkshake",
       "categoryId": 12,
@@ -1044,7 +1044,7 @@
     },
 
     {
-      "id": "vadapav_1",
+      "id": "696fc164ba31e68e0a7a03ff",
       "name": "Classic Vada Pav",
       "slug": "classic-vada-pav",
       "categoryId": 13,
@@ -1058,7 +1058,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "vadapav_2",
+      "id": "696fc164ba31e68e0a7a0400",
       "name": "Butter Vada Pav",
       "slug": "butter-vada-pav",
       "categoryId": 13,
@@ -1072,7 +1072,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "vadapav_3",
+      "id": "696fc164ba31e68e0a7a0401",
       "name": "Cheese Vada Pav",
       "slug": "cheese-vada-pav",
       "categoryId": 13,
@@ -1086,7 +1086,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "vadapav_4",
+      "id": "696fc164ba31e68e0a7a0402",
       "name": "Spicy Vada Pav",
       "slug": "spicy-vada-pav",
       "categoryId": 13,
@@ -1100,7 +1100,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "vadapav_5",
+      "id": "696fc164ba31e68e0a7a0403",
       "name": "Garlic Vada Pav",
       "slug": "garlic-vada-pav",
       "categoryId": 13,
@@ -1114,7 +1114,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "vadapav_6",
+      "id": "696fc164ba31e68e0a7a0404",
       "name": "Special Vada Pav",
       "slug": "special-vada-pav",
       "categoryId": 13,
@@ -1129,7 +1129,7 @@
     },
 
     {
-      "id": "samosa_1",
+      "id": "696fc164ba31e68e0a7a0405",
       "name": "Classic Samosa",
       "slug": "classic-samosa",
       "categoryId": 14,
@@ -1143,7 +1143,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "samosa_2",
+      "id": "696fc164ba31e68e0a7a0406",
       "name": "Paneer Samosa",
       "slug": "paneer-samosa",
       "categoryId": 14,
@@ -1157,7 +1157,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "samosa_3",
+      "id": "696fc164ba31e68e0a7a0407",
       "name": "Cheese Samosa",
       "slug": "cheese-samosa",
       "categoryId": 14,
@@ -1171,7 +1171,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "samosa_4",
+      "id": "696fc164ba31e68e0a7a0408",
       "name": "Aloo Samosa",
       "slug": "aloo-samosa",
       "categoryId": 14,
@@ -1185,7 +1185,7 @@
       "rating": { "value": 4.2, "reviews": null }
     },
     {
-      "id": "samosa_5",
+      "id": "696fc164ba31e68e0a7a0409",
       "name": "Masala Samosa",
       "slug": "masala-samosa",
       "categoryId": 14,
@@ -1199,7 +1199,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "samosa_6",
+      "id": "696fc164ba31e68e0a7a040a",
       "name": "Special Samosa",
       "slug": "special-samosa",
       "categoryId": 14,
@@ -1213,7 +1213,7 @@
       "rating": { "value": 4.7, "reviews": null }
     },
     {
-      "id": "momos_1",
+      "id": "696fc164ba31e68e0a7a040b",
       "name": "Veg Momos",
       "slug": "veg-momos",
       "categoryId": 15,
@@ -1227,7 +1227,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "momos_2",
+      "id": "696fc164ba31e68e0a7a040c",
       "name": "Chicken Momos",
       "slug": "chicken-momos",
       "categoryId": 15,
@@ -1241,7 +1241,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "momos_3",
+      "id": "696fc164ba31e68e0a7a040d",
       "name": "Paneer Momos",
       "slug": "paneer-momos",
       "categoryId": 15,
@@ -1255,7 +1255,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "momos_4",
+      "id": "696fc164ba31e68e0a7a040e",
       "name": "Fried Momos",
       "slug": "fried-momos",
       "categoryId": 15,
@@ -1269,7 +1269,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "momos_5",
+      "id": "696fc164ba31e68e0a7a040f",
       "name": "Tandoori Momos",
       "slug": "tandoori-momos",
       "categoryId": 15,
@@ -1283,7 +1283,7 @@
       "rating": { "value": 4.7, "reviews": null }
     },
     {
-      "id": "momos_6",
+      "id": "696fc164ba31e68e0a7a0410",
       "name": "Cheese Momos",
       "slug": "cheese-momos",
       "categoryId": 15,
@@ -1298,7 +1298,7 @@
     },
 
     {
-      "id": "pasta_1",
+      "id": "696fc164ba31e68e0a7a0411",
       "name": "White Sauce Pasta",
       "slug": "white-sauce-pasta",
       "categoryId": 16,
@@ -1312,7 +1312,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "pasta_2",
+      "id": "696fc164ba31e68e0a7a0412",
       "name": "Red Sauce Pasta",
       "slug": "red-sauce-pasta",
       "categoryId": 16,
@@ -1326,7 +1326,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "pasta_3",
+      "id": "696fc164ba31e68e0a7a0413",
       "name": "Cheese Pasta",
       "slug": "cheese-pasta",
       "categoryId": 16,
@@ -1340,7 +1340,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "pasta_4",
+      "id": "696fc164ba31e68e0a7a0414",
       "name": "Penne Pasta",
       "slug": "penne-pasta",
       "categoryId": 16,
@@ -1354,7 +1354,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "pasta_5",
+      "id": "696fc164ba31e68e0a7a0415",
       "name": "Arrabiata Pasta",
       "slug": "arrabiata-pasta",
       "categoryId": 16,
@@ -1368,7 +1368,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "pasta_6",
+      "id": "696fc164ba31e68e0a7a0416",
       "name": "Mix Sauce Pasta",
       "slug": "mix-sauce-pasta",
       "categoryId": 16,
@@ -1382,7 +1382,7 @@
       "rating": { "value": 4.7, "reviews": null }
     },
     {
-      "id": "burrito_1",
+      "id": "696fc164ba31e68e0a7a0417",
       "name": "Veg Burrito",
       "slug": "veg-burrito",
       "categoryId": 17,
@@ -1396,7 +1396,7 @@
       "rating": { "value": 4.2, "reviews": null }
     },
     {
-      "id": "burrito_2",
+      "id": "696fc164ba31e68e0a7a0418",
       "name": "Chicken Burrito",
       "slug": "chicken-burrito",
       "categoryId": 17,
@@ -1410,7 +1410,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "burrito_3",
+      "id": "696fc164ba31e68e0a7a0419",
       "name": "Paneer Burrito",
       "slug": "paneer-burrito",
       "categoryId": 17,
@@ -1424,7 +1424,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "burrito_4",
+      "id": "696fc164ba31e68e0a7a041a",
       "name": "Cheese Burrito",
       "slug": "cheese-burrito",
       "categoryId": 17,
@@ -1438,7 +1438,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "burrito_5",
+      "id": "696fc164ba31e68e0a7a041b",
       "name": "Spicy Chicken Burrito",
       "slug": "spicy-chicken-burrito",
       "categoryId": 17,
@@ -1452,7 +1452,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "burrito_6",
+      "id": "696fc164ba31e68e0a7a041c",
       "name": "Mexican Burrito",
       "slug": "mexican-burrito",
       "categoryId": 17,
@@ -1467,7 +1467,7 @@
     },
 
     {
-      "id": "nuggets_1",
+      "id": "696fc164ba31e68e0a7a041d",
       "name": "Chicken Nuggets",
       "slug": "chicken-nuggets",
       "categoryId": 18,
@@ -1481,7 +1481,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "nuggets_2",
+      "id": "696fc164ba31e68e0a7a041e",
       "name": "Veg Nuggets",
       "slug": "veg-nuggets",
       "categoryId": 18,
@@ -1495,7 +1495,7 @@
       "rating": { "value": 4.1, "reviews": null }
     },
     {
-      "id": "nuggets_3",
+      "id": "696fc164ba31e68e0a7a041f",
       "name": "Paneer Nuggets",
       "slug": "paneer-nuggets",
       "categoryId": 18,
@@ -1509,7 +1509,7 @@
       "rating": { "value": 4.2, "reviews": null }
     },
     {
-      "id": "nuggets_4",
+      "id": "696fc164ba31e68e0a7a0420",
       "name": "Cheese Nuggets",
       "slug": "cheese-nuggets",
       "categoryId": 18,
@@ -1523,7 +1523,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "nuggets_5",
+      "id": "696fc164ba31e68e0a7a0421",
       "name": "Spicy Nuggets",
       "slug": "spicy-nuggets",
       "categoryId": 18,
@@ -1537,7 +1537,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "nuggets_6",
+      "id": "696fc164ba31e68e0a7a0422",
       "name": "BBQ Nuggets",
       "slug": "bbq-nuggets",
       "categoryId": 18,
@@ -1551,7 +1551,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "friedchicken_1",
+      "id": "696fc164ba31e68e0a7a0423",
       "name": "Crispy Fried Chicken",
       "slug": "crispy-fried-chicken",
       "categoryId": 19,
@@ -1565,7 +1565,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "friedchicken_2",
+      "id": "696fc164ba31e68e0a7a0424",
       "name": "Spicy Fried Chicken",
       "slug": "spicy-fried-chicken",
       "categoryId": 19,
@@ -1579,7 +1579,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "friedchicken_3",
+      "id": "696fc164ba31e68e0a7a0425",
       "name": "BBQ Fried Chicken",
       "slug": "bbq-fried-chicken",
       "categoryId": 19,
@@ -1593,7 +1593,7 @@
       "rating": { "value": 4.7, "reviews": null }
     },
     {
-      "id": "friedchicken_4",
+      "id": "696fc164ba31e68e0a7a0426",
       "name": "Honey Glazed Fried Chicken",
       "slug": "honey-glazed-fried-chicken",
       "categoryId": 19,
@@ -1607,7 +1607,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "friedchicken_5",
+      "id": "696fc164ba31e68e0a7a0427",
       "name": "Garlic Fried Chicken",
       "slug": "garlic-fried-chicken",
       "categoryId": 19,
@@ -1621,7 +1621,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "friedchicken_6",
+      "id": "696fc164ba31e68e0a7a0428",
       "name": "Peri Peri Fried Chicken",
       "slug": "peri-peri-fried-chicken",
       "categoryId": 19,
@@ -1636,7 +1636,7 @@
     },
 
     {
-      "id": "hotdog_1",
+      "id": "696fc164ba31e68e0a7a0429",
       "name": "Classic Hot Dog",
       "slug": "classic-hot-dog",
       "categoryId": 20,
@@ -1650,7 +1650,7 @@
       "rating": { "value": 4.4, "reviews": null }
     },
     {
-      "id": "hotdog_2",
+      "id": "696fc164ba31e68e0a7a042a",
       "name": "Cheese Hot Dog",
       "slug": "cheese-hot-dog",
       "categoryId": 20,
@@ -1664,7 +1664,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "hotdog_3",
+      "id": "696fc164ba31e68e0a7a042b",
       "name": "Spicy Hot Dog",
       "slug": "spicy-hot-dog",
       "categoryId": 20,
@@ -1678,7 +1678,7 @@
       "rating": { "value": 4.3, "reviews": null }
     },
     {
-      "id": "hotdog_4",
+      "id": "696fc164ba31e68e0a7a042c",
       "name": "Chicken Hot Dog",
       "slug": "chicken-hot-dog",
       "categoryId": 20,
@@ -1692,7 +1692,7 @@
       "rating": { "value": 4.5, "reviews": null }
     },
     {
-      "id": "hotdog_5",
+      "id": "696fc164ba31e68e0a7a042d",
       "name": "Loaded Hot Dog",
       "slug": "loaded-hot-dog",
       "categoryId": 20,
@@ -1706,7 +1706,7 @@
       "rating": { "value": 4.6, "reviews": null }
     },
     {
-      "id": "hotdog_6",
+      "id": "696fc164ba31e68e0a7a042e",
       "name": "Jumbo Hot Dog",
       "slug": "jumbo-hot-dog",
       "categoryId": 20,

@@ -16,10 +16,6 @@ import CartPage from "./pages/CartPage";
 import SearchPage from "./pages/SearchPage";
 import { Toaster } from "react-hot-toast";
 
-//CORS
-// axios.defaults.baseURL = "http://localhost:3000";
-// axios.defaults.withCredentials = true;
-
 function App() {
   return (
     <>

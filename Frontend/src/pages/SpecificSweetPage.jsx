@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
-import api from "../api/axios";
+import api, { addToCartAPI } from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 import FullMenu from "../components/FullMenu";
@@ -125,15 +125,21 @@ export default function SpecificSweetPage() {
 
             {/* Add to Cart */}
             <button
-              onClick={() => {
+              onClick={async () => {
                 if (!user) {
                   toast.error("Please login to add items to cart");
                   navigate("/login");
                   return;
                 }
-                addToCart(sweet);
-                toast.success(`${sweet.name} added to cart`);
-                navigate("/cart");
+
+                try {
+                  await addToCartAPI(sweet.id || sweet.variantId || sweet._id);
+                  addToCart(sweet);
+                  toast.success(`${sweet.name} added to cart`);
+                  navigate("/cart");
+                } catch (error) {
+                  toast.error(error);
+                }
               }}
               className="mt-8 w-full md:w-fit px-8 py-4 bg-orange-500 text-white
                          font-semibold rounded-xl shadow-md

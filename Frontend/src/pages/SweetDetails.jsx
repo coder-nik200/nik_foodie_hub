@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState, useContext } from "react";
-import api from "../api/axios";
+import api, { addToCartAPI } from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 
@@ -99,16 +99,21 @@ const SweetDetails = () => {
 
             {/* CTA */}
             <button
-              onClick={() => {
+              onClick={async () => {
                 if (!user) {
                   toast.error("Please login to add items to cart");
                   navigate("/login");
                   return;
                 }
 
-                addToCart(item);
-                toast.success(`✅ ${item.name} added to cart!`);
-                navigate("/cart");
+                try {
+                  await addToCartAPI(item.id || item.variantId || item._id);
+                  addToCart(item);
+                  toast.success(`✅ ${item.name} added to cart!`);
+                  navigate("/cart");
+                } catch (error) {
+                  toast.error(error);
+                }
               }}
               className="w-full py-3 bg-orange-500 text-white font-semibold
                          hover:bg-orange-600 active:scale-95 transition-all"

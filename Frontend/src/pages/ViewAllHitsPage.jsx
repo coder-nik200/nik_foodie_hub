@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import api, { addToCartAPI } from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 import { RenderStars } from "../components/RenderStarts";
@@ -49,6 +49,23 @@ export default function ViewAllHitsPage() {
       item.category === food.category &&
       item.variantId !== food.variantId,
   );
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      toast.error("Please log in to add items to your cart.");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await addToCartAPI(food.id);
+      addToCart(food); // keep UI instant
+      toast.success(`${food.name} added to cart`);
+      navigate("/cart");
+    } catch (error) {
+      toast.error(error.message || "Failed to add item to cart");
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -128,22 +145,12 @@ export default function ViewAllHitsPage() {
 
             {/* Add to Cart */}
             <button
-              onClick={() => {
-                if (!user) {
-                  toast.error("Please login to add items to cart");
-                  navigate("/login");
-                  return;
-                }
-
-                addToCart(food);
-                toast.success(`${food.name} added to cart`);
-                navigate("/cart");
-              }}
+              onClick={handleAddToCart}
               className="mt-8 w-full md:w-fit px-8 py-4
-                         bg-orange-500 text-white font-semibold
-                         rounded-xl shadow-md
-                         hover:bg-orange-600 hover:shadow-lg
-                         transition-all"
+             bg-orange-500 text-white font-semibold
+             rounded-xl shadow-md
+             hover:bg-orange-600 hover:shadow-lg
+             transition-all"
             >
               Add to Cart
             </button>

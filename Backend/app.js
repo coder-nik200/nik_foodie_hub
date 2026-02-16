@@ -8,9 +8,9 @@ require("dotenv").config();
 const app = express();
 
 //Local Module
-const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 const foodRouter = require("./routes/foodRouter");
+const cartRouter = require("./routes/cartRouter");
 const corsOptions = require("./config/cors");
 
 //Middlewares
@@ -20,9 +20,9 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use("/static", express.static("data"));
 
-app.use("/auth", authRouter);
 app.use(userRouter);
 app.use("/foods", foodRouter);
+app.use("/cart", cartRouter);
 
 //Database connection
 mongoose

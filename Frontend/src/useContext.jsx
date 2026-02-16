@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import api from "./api/axios";
 import { createContext, useEffect, useState } from "react";
 
@@ -66,17 +67,25 @@ export function UserContextProvider({ children }) {
   };
 
   useEffect(() => {
-    api
-      .get("/auth/profile", { withCredentials: true })
-      .then(({ data }) => {
-        // console.log("Profile response:", data);
-        setUser(data);
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/me");
+        setUser(res.data.user);
+      } catch (error) {
+        if (error.response?.status === 401) {
+          setUser(null);
+          toast.error("Session expired. Please login again ❌", {
+            toastId: "auth-expired",
+          });
+        } else {
+          toast.error("Something went wrong ⚠️");
+        }
+      } finally {
         setReady(true);
-      })
-      .catch(() => {
-        setUser(null);
-        setReady(true);
-      });
+      }
+    };
+
+    fetchUser();
   }, []);
 
   return (

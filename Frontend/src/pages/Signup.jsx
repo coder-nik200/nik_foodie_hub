@@ -1,190 +1,232 @@
+import { Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import api from "../api/axios";
 
-export default function Signup() {
-  const navigate = useNavigate();
-
+const SignupPage = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
-    userType: "guest", // default
+    confirmPassword: "",
+    userType: "guest",
   });
 
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!acceptedTerms) {
-      setError("Please accept the Terms & Conditions");
+      toast.error("Please accept Terms & Conditions");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match ❌");
       return;
     }
 
     try {
-      const response = await api.post("/signup", formData);
+      setLoading(true);
+      const { confirmPassword, ...dataToSend } = formData;
+      await api.post("/signup", dataToSend);
 
-      console.log("Signup successfully: ", response.data);
-      toast.success("Signup successfully ✅");
-
-      navigate("/login");
-    } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      toast.success("Account created successfully 🎉");
+      navigate("/");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100 px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8"
-      >
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Create Account
-        </h2>
-
-        {error && (
-          <div className="mb-4 rounded-lg bg-red-100 text-red-700 px-4 py-2 text-sm">
-            {error}
-          </div>
-        )}
-
-        {/* First Name */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-1">
-            First Name
-          </label>
-          <input
-            type="text"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            onChange={(e) =>
-              setFormData({ ...formData, firstName: e.target.value })
-            }
-            required
-          />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-orange-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl p-8 shadow-2xl">
+        {/* HEADER */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+            Create Account
+          </h1>
         </div>
 
-        {/* Last Name */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-1">
-            Last Name
-          </label>
-          <input
-            type="text"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            onChange={(e) =>
-              setFormData({ ...formData, lastName: e.target.value })
-            }
-            required
-          />
-        </div>
-
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            required
-          />
-        </div>
-
-        {/* Password */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-1">
-            Password
-          </label>
-          <input
-            type="password"
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            required
-          />
-        </div>
-
-        {/* User Type */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-2">
-            Sign up as
-          </label>
-          <div className="flex gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="userType"
-                value="guest"
-                checked={formData.userType === "guest"}
-                onChange={(e) =>
-                  setFormData({ ...formData, userType: e.target.value })
-                }
-                className="accent-orange-500"
-              />
-              Guest
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* NAME */}
+          <div>
+            <label className="mb-2 flex items-center gap-2 text-base font-semibold text-gray-700">
+              <User size={18} /> Full Name
             </label>
-
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="radio"
-                name="userType"
-                value="host"
-                checked={formData.userType === "host"}
-                onChange={(e) =>
-                  setFormData({ ...formData, userType: e.target.value })
-                }
-                className="accent-orange-500"
-              />
-              Host
-            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your full name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-base
+              focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+            />
           </div>
-        </div>
 
-        {/* Terms & Conditions */}
-        <div className="mb-6 flex items-start gap-2">
-          <input
-            type="checkbox"
-            className="mt-1 accent-orange-500"
-            checked={acceptedTerms}
-            onChange={(e) => setAcceptedTerms(e.target.checked)}
-          />
-          <p className="text-sm text-gray-600">
-            I agree to the{" "}
-            <span className="text-orange-500 cursor-pointer hover:underline">
-              Terms & Conditions
+          {/* EMAIL */}
+          <div>
+            <label className="mb-2 flex items-center gap-2 text-base font-semibold text-gray-700">
+              <Mail size={18} /> Email Address
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-base
+              focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+            />
+          </div>
+
+          {/* PASSWORD */}
+          <div>
+            <label className="mb-2 flex items-center gap-2 text-base font-semibold text-gray-700">
+              <Lock size={18} /> Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Create a password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 text-base
+                focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2
+                rounded-lg p-1 text-slate-500
+                hover:bg-orange-50 hover:text-orange-600 transition"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
+
+          {/* CONFIRM PASSWORD */}
+          <div>
+            <label className="mb-2 flex items-center gap-2 text-base font-semibold text-gray-700">
+              <Lock size={18} /> Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 text-base
+                focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2
+                rounded-lg p-1 text-slate-500
+                hover:bg-orange-50 hover:text-orange-600 transition"
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
+
+          {/* USER TYPE */}
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Sign up as
+            </label>
+            <div className="flex gap-6">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="userType"
+                  value="guest"
+                  checked={formData.userType === "guest"}
+                  onChange={handleChange}
+                  className="accent-orange-500"
+                />
+                Guest
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="userType"
+                  value="host"
+                  checked={formData.userType === "host"}
+                  onChange={handleChange}
+                  className="accent-orange-500"
+                />
+                Host
+              </label>
+            </div>
+          </div>
+
+          {/* TERMS */}
+          <div className="flex items-start gap-2">
+            <input
+              type="checkbox"
+              className="mt-1 accent-orange-500"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+            />
+            <p className="text-sm text-gray-600">
+              I agree to the{" "}
+              <span className="text-orange-500 cursor-pointer hover:underline">
+                Terms & Conditions
+              </span>
+            </p>
+          </div>
+
+          {/* SUBMIT BUTTON */}
+          <button
+            type="submit"
+            disabled={!acceptedTerms || loading}
+            className="flex items-center justify-center w-full rounded-xl 
+            bg-orange-500 py-3 text-base font-semibold text-white 
+            transition-all duration-300 
+            hover:-translate-y-1 hover:bg-orange-600 hover:shadow-lg 
+            active:translate-y-0 active:scale-95 
+            disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {loading ? "Creating Account..." : "Sign Up"}
+          </button>
+
+          {/* LOGIN LINK */}
+          <p className="text-sm text-center text-gray-600">
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              className="font-semibold text-orange-500 hover:text-orange-600 hover:underline cursor-pointer transition"
+            >
+              Login
             </span>
           </p>
-        </div>
-
-        {/* Button */}
-        <button
-          type="submit"
-          disabled={!acceptedTerms}
-          className="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition duration-200 disabled:opacity-60"
-        >
-          Sign Up
-        </button>
-
-        {/* Login link */}
-        <p className="text-sm text-center text-gray-600 mt-4">
-          Already have an account?{" "}
-          <span
-            onClick={() => navigate("/login")}
-            className="text-orange-500 font-medium cursor-pointer hover:underline"
-          >
-            Login
-          </span>
-        </p>
-      </form>
+        </form>
+      </div>
     </div>
   );
-}
+};
+
+export default SignupPage;

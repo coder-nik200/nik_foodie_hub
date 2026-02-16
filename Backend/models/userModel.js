@@ -2,14 +2,12 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
+    name: {
       type: String,
       required: true,
+      trim: true,
     },
-    lastName: {
-      type: String,
-      required: true,
-    },
+
     email: {
       type: String,
       required: true,
@@ -22,10 +20,11 @@ const userSchema = new mongoose.Schema(
     userType: {
       type: String,
       enum: ["guest", "host"],
+      required: true,
       default: "guest",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("User", userSchema);
