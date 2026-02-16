@@ -3,6 +3,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState, useContext } from "react";
 import api, { addToCartAPI } from "../api/axios";
+
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 
@@ -54,12 +55,12 @@ const SweetDetails = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {products.map((item) => (
+        {products.map((item, index) => (
           <div
-            key={item.variantId}
+            key={item._id || item.id}
             className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
           >
-            <Link to={`/foods/sweet/${item.variantId}`} key={item.id}>
+            <Link to={`/foods/sweet/${item.id}`}>
               {/* Image */}
               <div className="overflow-hidden">
                 <img
@@ -77,22 +78,25 @@ const SweetDetails = () => {
               <div className="p-4 space-y-1">
                 <h3 className="font-semibold line-clamp-1">{item.name}</h3>
 
-                <p className="text-sm text-gray-500 line-clamp-2">
-                  {item.uspDescription}
-                </p>
+                <p className="text-sm text-gray-500 line-clamp-2">{item.usp}</p>
 
                 <p className="text-xs text-gray-500 mt-1">
                   {item.weight} | {item.pieces || "-"} | Serves {item.serves}
                 </p>
 
                 <p className="font-semibold text-base mt-2">
-                  ₹{item.discountedPrice}
-                  <span className="line-through text-gray-400 ml-2">
-                    ₹{item.basePrice}
-                  </span>
-                  <span className="text-green-600 ml-2 text-sm">
-                    ({item.discountPercentage}% OFF)
-                  </span>
+                  ₹{item.discountedPrice ?? item.basePrice}
+                  {item.basePrice && (
+                    <>
+                      <span className="line-through text-gray-400 ml-2">
+                        ₹{item.basePrice}
+                      </span>
+
+                      <span className="text-green-600 ml-2 text-sm">
+                        ({item.discountPercentage ?? 0}% OFF)
+                      </span>
+                    </>
+                  )}
                 </p>
               </div>
             </Link>
@@ -107,7 +111,7 @@ const SweetDetails = () => {
                 }
 
                 try {
-                  await addToCartAPI(item.id || item.variantId || item._id);
+                  await addToCartAPI(item.id);
                   addToCart(item);
                   toast.success(`✅ ${item.name} added to cart!`);
                   navigate("/cart");

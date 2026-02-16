@@ -45,10 +45,8 @@ export default function SpecificSweetPage() {
   if (error) return <p className="text-center mt-20 text-red-500">{error}</p>;
   if (!sweet) return <p className="text-center mt-20">Loading...</p>;
 
-  const currentId = sweet.variantId || sweet.id;
-  const recommendations = allSweets.filter(
-    (item) => (item.variantId || item.id) !== currentId,
-  );
+  const currentId = sweet._id;
+  const recommendations = allSweets.filter((item) => item._id !== currentId);
 
   return (
     <div className="min-h-screen">
@@ -161,8 +159,8 @@ export default function SpecificSweetPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {recommendations.map((item) => (
                 <Link
-                  to={`/foods/sweet/${item.variantId || item.id}`}
-                  key={item.variantId || item.id}
+                  to={`/foods/sweet/${item._id}`}
+                  key={item.variantId || item._id}
                   className="bg-white rounded-2xl overflow-hidden shadow-sm
                              hover:shadow-xl hover:-translate-y-1
                              transition-all duration-300"

@@ -90,57 +90,51 @@ const SweetData = () => {
         className="flex gap-4 sm:gap-5 overflow-x-auto scroll-smooth no-scrollbar select-none py-2"
       >
         {food.map((item) => (
-          <div
-            key={item.variantId}
-            className="w-[15rem] sm:w-[16rem] md:w-[18rem] 
-                 bg-white rounded-2xl p-3 
-                 shadow-sm hover:shadow-lg 
-                 transition-all duration-300 
-                 flex-shrink-0 group"
-          >
-            <Link to={`/foods/sweet/${item.variantId}`}>
-              {/* Image */}
-              <div className="overflow-hidden rounded-xl">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-32 sm:h-36 md:h-40 
-                       object-cover 
-                       group-hover:scale-105 
-                       transition-transform duration-300"
-                />
-              </div>
+  <div
+    key={item.id}
+    className="w-[15rem] sm:w-[16rem] md:w-[18rem] 
+    bg-white rounded-2xl p-3 
+    shadow-sm hover:shadow-lg 
+    transition-all duration-300 
+    flex-shrink-0 group"
+  >
+    <Link to={`/foods/sweet/${item.id}`}>
+      <div className="overflow-hidden rounded-xl">
+        <img
+          src={item.image}
+          alt={item.name}
+          className="w-full h-32 sm:h-36 md:h-40 object-cover 
+          group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
 
-              {/* Content */}
-              <div className="mt-3 space-y-1">
-                <h3 className="font-semibold text-sm sm:text-base md:text-lg leading-snug">
-                  {item.name.length > 30
-                    ? item.name.slice(0, 30) + "..."
-                    : item.name}
-                </h3>
+      <div className="mt-3 space-y-1">
+        <h3 className="font-semibold text-sm sm:text-base md:text-lg leading-snug">
+          {item.name}
+        </h3>
 
-                <p className="text-xs sm:text-sm text-gray-500">
-                  {item.weight} • {item.pieces} pcs • Serves {item.serves}
-                </p>
+        <p className="text-xs sm:text-sm text-gray-500">
+          {item.weight} • {item.pieces} pcs • Serves {item.serves}
+        </p>
 
-                {/* Price */}
-                <div className="flex items-center flex-wrap gap-1 mt-2">
-                  <span className="font-bold text-sm sm:text-base text-gray-900">
-                    ₹{item.discountedPrice}
-                  </span>
+        <div className="flex items-center flex-wrap gap-1 mt-2">
+          <span className="font-bold text-sm sm:text-base text-gray-900">
+            ₹{item.discountedPrice}
+          </span>
 
-                  <span className="text-xs sm:text-sm text-gray-400 line-through">
-                    ₹{item.basePrice}
-                  </span>
+          <span className="text-xs sm:text-sm text-gray-400 line-through">
+            ₹{item.basePrice}
+          </span>
 
-                  <span className="text-xs sm:text-sm text-green-600 font-semibold">
-                    {item.discountPercentage}% OFF
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        ))}
+          <span className="text-xs sm:text-sm text-green-600 font-semibold">
+            {item.discountPercentage}% OFF
+          </span>
+        </div>
+      </div>
+    </Link>
+  </div>
+))}
+
 
         {/* View All Card */}
         <div
