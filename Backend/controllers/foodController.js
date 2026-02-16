@@ -51,13 +51,14 @@ const getCurrentHits = async (req, res) => {
 // Get current hits by ID
 const getFoodDetails = async (req, res) => {
   const { id } = req.params;
+  
   try {
     let food = null;
 
-    food = currentHits.products.find((item) => item.variantId === id);
+    food = currentHits.products.find((item) => item.id === id);
 
     if (!food && sweetsData?.products) {
-      food = sweetsData.products.find((item) => item.variantId === id);
+      food = sweetsData.products.find((item) => item.id === id);
     }
 
     if (!food && foodData?.products) {
@@ -89,7 +90,7 @@ const getSpecificSweet = async (req, res) => {
   }
 
   try {
-    const food = sweetsData.products.find((item) => item.variantId === id);
+    const food = sweetsData.products.find((item) => item.id === id);
 
     if (!food) {
       return res.status(404).json({ message: "Food not found" });
@@ -118,7 +119,7 @@ const getSpecificDrink = async (req, res) => {
   }
 
   try {
-    const food = drinksData.products.find((item) => item.variantId === id);
+    const food = drinksData.products.find((item) => item.id === id);
 
     if (!food) {
       return res.status(404).json({ message: "Food not found" });

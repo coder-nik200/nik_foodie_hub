@@ -10,7 +10,13 @@ export const addToCartAPI = async (foodId) => {
     const response = await api.post("/cart/add", { foodId });
     return response.data;
   } catch (error) {
-    throw error.response?.data?.message || "Failed to add item to cart";
+    // Better error handling
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to add item to cart";
+    throw message;
   }
 };
 

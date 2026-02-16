@@ -58,12 +58,21 @@ export default function ViewAllHitsPage() {
     }
 
     try {
-      await addToCartAPI(food.id);
+      // Use the correct ID property from the food object
+      const foodIdToSend = food.id || food._id || food.variantId;
+      
+      if (!foodIdToSend) {
+        toast.error("Food ID not found");
+        return;
+      }
+
+      await addToCartAPI(foodIdToSend);
       addToCart(food); // keep UI instant
       toast.success(`${food.name} added to cart`);
       navigate("/cart");
     } catch (error) {
-      toast.error(error.message || "Failed to add item to cart");
+      console.error("Add to cart error:", error);
+      toast.error(error || "Failed to add item to cart");
     }
   };
 
