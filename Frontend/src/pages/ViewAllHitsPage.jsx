@@ -60,7 +60,7 @@ export default function ViewAllHitsPage() {
     try {
       // Use the correct ID property from the food object
       const foodIdToSend = food.id || food._id || food.variantId;
-      
+
       if (!foodIdToSend) {
         toast.error("Food ID not found");
         return;
@@ -176,8 +176,8 @@ export default function ViewAllHitsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {recommendations.map((item) => (
                 <Link
-                  to={`/foods/view-all-hits/${item.variantId}`}
-                  key={item.variantId}
+                  to={`/foods/view-all-hits/${item.variantId || item._id}`}
+                  key={item.variantId || item._id}
                   className="bg-white rounded-2xl overflow-hidden
                              shadow-sm hover:shadow-xl
                              hover:-translate-y-1

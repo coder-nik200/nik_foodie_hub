@@ -105,16 +105,16 @@ export default function SpecificSweetPage() {
               {/* Price */}
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <span className="text-3xl font-bold text-green-600">
-                  ₹{sweet.discountedPrice ?? sweet.basePrice}
+                  ₹{sweet.price.discountedPrice ?? sweet.price.mrp}
                 </span>
 
-                {sweet.basePrice && (
+                {sweet.price.mrp && (
                   <>
                     <span className="line-through text-gray-400">
-                      ₹{sweet.basePrice}
+                      ₹{sweet.price.mrp}
                     </span>
                     <span className="text-red-500 font-semibold">
-                      {sweet.discountPercentage}% OFF
+                      {sweet.price.discountPercent}% OFF
                     </span>
                   </>
                 )}
@@ -175,30 +175,31 @@ export default function SpecificSweetPage() {
                     <h3 className="font-semibold">{item.name}</h3>
 
                     <p className="text-sm text-gray-600 line-clamp-2">
-                      {item.uspDescription}
+                      {item.usp}
                     </p>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between pt-2">
                       <span className="text-yellow-500 text-sm">
-                        {item.rating
-                          ? RenderStars(item.rating.value)
-                          : "No rating"}
+                        {RenderStars(item.rating?.value || 0)}
+                        <span className="text-gray-500">
+                          ({item.rating?.value || 0})
+                        </span>
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 pt-2">
                       <span className="font-bold text-green-600">
-                        ₹{item.discountedPrice ?? item.basePrice}
+                        ₹{item.price.discountedPrice ?? item.price.mrp}
                       </span>
 
-                      {item.basePrice && (
+                      {item.price.mrp && (
                         <span className="line-through text-gray-400 text-sm">
-                          ₹{item.basePrice}
+                          ₹{item.price.mrp}
                         </span>
                       )}
 
                       <span className="text-red-500 text-sm font-semibold">
-                        ({item.discountPercentage ?? 0}% OFF)
+                        ({item.price.discountPercent ?? 0}% OFF)
                       </span>
                     </div>
                   </div>

@@ -47,7 +47,7 @@ export default function SpecificDrinkPage() {
 
   const currentId = drinks.variantId || drinks.id;
   const recommendations = allDrinks.filter(
-    (item) => (item.variantId || item.id) !== currentId,
+    (item) => (item.variantId || item._id) !== currentId,
   );
 
   return (
@@ -72,9 +72,7 @@ export default function SpecificDrinkPage() {
                 {drinks.name}
               </h1>
 
-              <p className="text-gray-600 mt-3 leading-relaxed">
-                {drinks.uspDescription}
-              </p>
+              <p className="text-gray-600 mt-3 leading-relaxed">{drinks.usp}</p>
 
               {/* Info */}
               <div className="mt-6 space-y-2 text-sm md:text-base">
@@ -108,16 +106,16 @@ export default function SpecificDrinkPage() {
               {/* Price */}
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <span className="text-3xl font-bold text-green-600">
-                  ₹{drinks.discountedPrice ?? drinks.basePrice}
+                  ₹{drinks.price.discountedPrice ?? drinks.price.mrp}
                 </span>
 
-                {drinks.basePrice && (
+                {drinks.price.mrp && (
                   <>
                     <span className="line-through text-gray-400">
-                      ₹{drinks.basePrice}
+                      ₹{drinks.price.mrp}
                     </span>
                     <span className="text-red-500 font-semibold">
-                      {drinks.discountPercentage}% OFF
+                      {drinks.price.discountPercent}% OFF
                     </span>
                   </>
                 )}
@@ -134,7 +132,9 @@ export default function SpecificDrinkPage() {
                 }
 
                 try {
-                  await addToCartAPI(drinks.id || drinks.variantId || drinks._id);
+                  await addToCartAPI(
+                    drinks.id || drinks.variantId || drinks._id,
+                  );
                   addToCart(drinks);
                   toast.success(`${drinks.name} added to cart`);
                   navigate("/cart");
@@ -163,8 +163,8 @@ export default function SpecificDrinkPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
               {recommendations.map((item) => (
                 <Link
-                  to={`/foods/drinks/${item.variantId || item.id}`}
-                  key={item.variantId || item.id}
+                  to={`/foods/drinks/${item.variantId || item._id}`}
+                  key={item.variantId || item._id}
                   className="bg-white rounded-2xl overflow-hidden
                              shadow-sm hover:shadow-xl
                              hover:-translate-y-1
@@ -180,30 +180,31 @@ export default function SpecificDrinkPage() {
                     <h3 className="font-semibold">{item.name}</h3>
 
                     <p className="text-sm text-gray-600 line-clamp-2">
-                      {item.uspDescription}
+                      {item.usp}
                     </p>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between pt-2">
                       <span className="text-yellow-500 text-sm">
-                        {item.rating
-                          ? RenderStars(item.rating.value)
-                          : "No rating"}
+                        {RenderStars(item.rating?.value || 0)}
+                        <span className="text-gray-500">
+                          ({item.rating?.value || 0})
+                        </span>
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 pt-2">
                       <span className="font-bold text-green-600">
-                        ₹{item.discountedPrice ?? item.basePrice}
+                        ₹{item.price.discountedPrice ?? item.price.mrp}
                       </span>
 
-                      {item.basePrice && (
+                      {item.price.mrp && (
                         <span className="line-through text-gray-400 text-sm">
-                          ₹{item.basePrice}
+                          ₹{item.price.mrp}
                         </span>
                       )}
 
                       <span className="text-red-500 text-sm font-semibold">
-                        ({item.discountPercentage ?? 0}% OFF)
+                        ({item.price.discountPercent ?? 0}% OFF)
                       </span>
                     </div>
                   </div>

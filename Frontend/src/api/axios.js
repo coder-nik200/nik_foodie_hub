@@ -5,6 +5,12 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// GET CURRENT CART
+export const getCartAPI = async () => {
+  const response = await api.get("/cart");
+  return response.data;
+};
+
 export const addToCartAPI = async (foodId) => {
   try {
     const response = await api.post("/cart/add", { foodId });
@@ -18,6 +24,24 @@ export const addToCartAPI = async (foodId) => {
       "Failed to add item to cart";
     throw message;
   }
+};
+
+// DECREMENT ITEM QUANTITY
+export const decrementCartItemAPI = async (foodId) => {
+  const response = await api.post("/cart/decrement", { foodId });
+  return response.data;
+};
+
+// REMOVE ITEM FROM CART
+export const removeFromCartAPI = async (foodId) => {
+  const response = await api.post("/cart/remove", { foodId });
+  return response.data;
+};
+
+// CLEAR CART / CHECKOUT
+export const clearCartAPI = async () => {
+  const response = await api.post("/cart/clear");
+  return response.data;
 };
 
 export default api; // ✅ THIS IS REQUIRED

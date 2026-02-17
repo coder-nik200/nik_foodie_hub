@@ -1,5 +1,9 @@
 const Cart = require("../models/cart");
 const Food = require("../models/food");
+const mongoose = require("mongoose");
+// Try to access Drink/Sweet models if they've been registered elsewhere
+const Drink = mongoose.models.Drink;
+const Sweet = mongoose.models.Sweet || require("../models/sweet");
 const fs = require("fs");
 const path = require("path");
 
@@ -21,7 +25,13 @@ const findFoodInJSON = (foodId) => {
       );
       const products = data.products || data;
       const food = Array.isArray(products)
-        ? products.find((item) => item.id === foodId)
+        ? products.find(
+            (item) =>
+              item.id === foodId ||
+              item.variantId === foodId ||
+              item._id === foodId ||
+              String(item.id) === String(foodId),
+          )
         : products[foodId];
       if (food) return food;
     } catch (error) {
@@ -55,11 +65,32 @@ const addToCart = async (req, res) => {
       return res.status(400).json({ message: "Food ID is required" });
     }
 
-    // 2️⃣ Check food exists (try MongoDB first, then JSON)
-    let food = await Food.findById(foodId);
+    // 2️⃣ Check food exists (try MongoDB: Food, Drink, Sweet; then JSON)
+    let food = null;
 
+    // Try Food collection
+    try {
+      food = await Food.findById(foodId);
+    } catch (e) {
+      // ignore cast errors
+    }
+
+    // Try Drink collection
     if (!food) {
-      // Try to find in JSON files
+      try {
+        food = await Drink.findById(foodId);
+      } catch (e) {}
+    }
+
+    // Try Sweet collection
+    if (!food) {
+      try {
+        food = await Sweet.findById(foodId);
+      } catch (e) {}
+    }
+
+    // Finally try JSON fallback
+    if (!food) {
       food = findFoodInJSON(foodId);
     }
 
@@ -81,11 +112,15 @@ const addToCart = async (req, res) => {
     }
 
     // 4️⃣ Check if item already in cart
-    // For JSON data, use foodId; for MongoDB, use _id
-    const foodIdentifier = food._id || food.id;
+    // For MongoDB documents, use _id; for JSON objects use id or variantId
+    const foodIdentifier = food._id || food.id || food.variantId || foodId;
+
     const existingItem = cart.items.find((item) => {
-      const itemId = item.food instanceof String ? item.food : item.food._id;
-      return itemId.toString() === foodIdentifier.toString();
+      // item.food may be an ObjectId, a string, or populated object
+      const itemId = item.food?.toString
+        ? item.food.toString()
+        : String(item.food);
+      return itemId === String(foodIdentifier);
     });
 
     if (existingItem) {
@@ -118,4 +153,111 @@ const addToCart = async (req, res) => {
   }
 };
 
-module.exports = addToCart;
+const removeFromCart = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { foodId } = req.body;
+
+    if (!foodId)
+      return res.status(400).json({ message: "Food ID is required" });
+
+    const cart = await Cart.findOne({ user: userId });
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+    cart.items = cart.items.filter(
+      (item) => String(item.food) !== String(foodId),
+    );
+
+    await cart.save();
+
+    res.status(200).json({ message: "Item removed", cart });
+  } catch (err) {
+    console.error("REMOVE FROM CART ERROR:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to remove item", error: err.message });
+  }
+};
+
+const clearCart = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const cart = await Cart.findOne({ user: userId });
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+    cart.items = [];
+    await cart.save();
+
+    res.status(200).json({ message: "Cart cleared" });
+  } catch (err) {
+    console.error("CLEAR CART ERROR:", err);
+    res
+      .status(500)
+      .json({ message: "Failed to clear cart", error: err.message });
+  }
+};
+
+// Decrement Cart Item
+const decrementCartItem = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    const { foodId } = req.body;
+
+    if (!foodId)
+      return res.status(400).json({ message: "Food ID is required" });
+
+    let cart = await Cart.findOne({ user: userId });
+    if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+    const itemIndex = cart.items.findIndex(
+      (item) => String(item.food) === String(foodId),
+    );
+
+    if (itemIndex === -1)
+      return res.status(404).json({ message: "Item not found in cart" });
+
+    if (cart.items[itemIndex].quantity > 1) {
+      cart.items[itemIndex].quantity -= 1;
+    } else {
+      cart.items.splice(itemIndex, 1); // remove if quantity becomes 0
+    }
+
+    await cart.save();
+    res.status(200).json({ message: "Cart updated successfully", cart });
+  } catch (error) {
+    console.error("Decrement Cart Error:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to decrement item", error: error.message });
+  }
+};
+
+// Get Cart
+const getCart = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+
+    let cart = await Cart.findOne({ user: userId }).populate("items.food");
+
+    if (!cart) {
+      // Return empty cart if none exists
+      return res.status(200).json({ cart: [] });
+    }
+
+    res.status(200).json({ cart: cart.items });
+  } catch (error) {
+    console.error("Get Cart Error:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to get cart", error: error.message });
+  }
+};
+
+module.exports = {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  decrementCartItem,
+  getCart,
+};

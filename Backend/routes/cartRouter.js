@@ -1,5 +1,11 @@
 const express = require("express");
-const addToCart = require("../controllers/cartController.js");
+const {
+  addToCart,
+  removeFromCart,
+  clearCart,
+  decrementCartItem,
+  getCart,
+} = require("../controllers/cartController.js");
 const protect = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
@@ -10,6 +16,10 @@ router.get("/test", (req, res) => {
   res.json({ message: "Cart endpoint is working!" });
 });
 
+router.get("/cart", protect, getCart);
 router.post("/add", protect, addToCart);
+router.post("/remove", protect, removeFromCart);
+router.post("/clear", protect, clearCart);
+router.post("/decrement", decrementCartItem);
 
 module.exports = router;

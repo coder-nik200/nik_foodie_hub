@@ -21,7 +21,7 @@ const FullMenu = () => {
 
   // Exclude current food
   const otherFoods = allFoods.filter(
-    (item) => (item.variantId || item.id) !== currentId,
+    (item) => (item.variantId || item.id || item._id) !== currentId,
   );
 
   return (
@@ -33,8 +33,8 @@ const FullMenu = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {otherFoods.map((item) => (
               <Link
-                to={`/foods/view-all-hits/${item.id}`}
-                key={item.id}
+                to={`/foods/view-all-hits/${item._id}`}
+                key={item._id}
                 className="group bg-white rounded-2xl overflow-hidden
                            shadow-sm hover:shadow-xl
                            transition-all duration-300"

@@ -4,18 +4,18 @@ import fs from "fs";
 const fastFoodData = JSON.parse(
   fs.readFileSync(new URL("../data/fastFoodData.json", import.meta.url)),
 );
-const currentHits = JSON.parse(
-  fs.readFileSync(new URL("../data/currenthits.json", import.meta.url)),
-);
+
 const sweetsData = JSON.parse(
   fs.readFileSync(new URL("../data/sweetsData.json", import.meta.url)),
 );
-const drinksData = JSON.parse(
-  fs.readFileSync(new URL("../data/drinksData.json", import.meta.url)),
-);
+
 const foodData = JSON.parse(
   fs.readFileSync(new URL("../data/foodData.json", import.meta.url)),
 );
+
+import CurrentHits from "../models/currentHits.js";
+import Drink from "../models/drink.js";
+import Sweet from "../models/sweet.js";
 
 // Get all food options
 const getFoodOptions = async (req, res) => {
@@ -42,7 +42,8 @@ const getFoodById = (req, res) => {
 // Get all current hits
 const getCurrentHits = async (req, res) => {
   try {
-    res.json({ products: currentHits.products }); // send all products
+    const currentHits = await CurrentHits.find();
+    res.json({ products: currentHits }); // send all products
   } catch (error) {
     res.status(500).json({ message: "Food API failed" });
   }
@@ -51,87 +52,97 @@ const getCurrentHits = async (req, res) => {
 // Get current hits by ID
 const getFoodDetails = async (req, res) => {
   const { id } = req.params;
-  
+
   try {
     let food = null;
 
-    food = currentHits.products.find((item) => item.id === id);
+    // 1️⃣ Check current hits (MongoDB)
+    const currentHits = await CurrentHits.findById(id);
+    if (currentHits) food = currentHits;
 
-    if (!food && sweetsData?.products) {
-      food = sweetsData.products.find((item) => item.id === id);
+    // 2️⃣ Check sweets (MongoDB)
+    if (!food) {
+      const sweet = await Sweet.findById(id);
+      if (sweet) food = sweet;
     }
 
-    if (!food && foodData?.products) {
-      food = foodData.products.find((item) => item.id === id);
+    // 3️⃣ Check drinks (MongoDB)
+    if (!food) {
+      const drink = await Drink.findById(id);
+      if (drink) food = drink;
+    }
+
+    // 4️⃣ Check JSON fallback (numbers)
+    if (!food) {
+      const numericId = isNaN(Number(id)) ? id : Number(id);
+
+      const allJSONData = [
+        fastFoodData,
+        sweetsData.products,
+        foodData.products,
+      ];
+
+      for (const dataset of allJSONData) {
+        if (!dataset) continue;
+        food = dataset.find((item) => item.id === numericId);
+        if (food) break;
+      }
     }
 
     if (!food) {
       return res.status(404).json({ message: "Food not found" });
     }
+
     res.status(200).json({ product: food });
   } catch (error) {
-    res.status(500).json({ message: "Food API failed" });
+    console.error("Error in getFoodDetails:", error);
+    res.status(500).json({ message: "Food API failed", error: error.message });
   }
 };
 
+// GET all sweets
 const getSweetFood = async (req, res) => {
   try {
-    res.json({ products: sweetsData.products }); // send all products
+    const sweets = await Sweet.find();
+    res.json({ products: sweets }); // send all products
   } catch (error) {
-    res.status(500).json({ message: "Food API failed" });
+    res.status(500).json({ message: error.message });
   }
 };
 
+// GET a single sweet by ID
 const getSpecificSweet = async (req, res) => {
-  const { id } = req.params;
-
-  if (!id || id === "undefined") {
-    return res.status(400).json({ message: "Invalid sweet ID" });
-  }
-
   try {
-    const food = sweetsData.products.find((item) => item.id === id);
-
-    if (!food) {
-      return res.status(404).json({ message: "Food not found" });
-    }
-
-    res.status(200).json({ product: food });
-  } catch (error) {
-    console.error("Error in getSpecificSweet:", error);
-    res.status(500).json({ message: "Food API failed" });
+    const sweet = await Sweet.findById(req.params.id);
+    if (!sweet) return res.status(404).json({ message: "Sweet not found" });
+    res.json({ product: sweet });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
+// GET all drinks
 const getDrinks = async (req, res) => {
   try {
-    res.json({ products: drinksData.products }); // send all products
-  } catch (error) {
-    res.status(500).json({ message: "Food API failed" });
+    const drinks = await Drink.find();
+    res.json({ products: drinks });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
+// GET a single drink by ID
 const getSpecificDrink = async (req, res) => {
-  const { id } = req.params;
-
-  if (!id || id === "undefined") {
-    return res.status(400).json({ message: "Invalid sweet ID" });
-  }
-
   try {
-    const food = drinksData.products.find((item) => item.id === id);
-
-    if (!food) {
-      return res.status(404).json({ message: "Food not found" });
-    }
-
-    res.status(200).json({ product: food });
-  } catch (error) {
-    console.error("Error in getSpecificSweet:", error);
-    res.status(500).json({ message: "Food API failed" });
+    const drink = await Drink.findById(req.params.id);
+    if (!drink) return res.status(404).json({ message: "Drink not found" });
+    res.json({ product: drink });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
+// GET a single item by ID
 const getSpecificItem = async (req, res) => {
   const categoryId = Number(req.params.id);
 

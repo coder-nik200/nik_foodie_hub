@@ -57,8 +57,8 @@ const ViewAllHits = () => {
         {food?.length > 0 ? (
           food.map((item) => (
             <div
-              key={item.id}
-              onClick={() => handleClick(item.id)}
+              key={item._id}
+              onClick={() => handleClick(item._id)}
               className="group bg-white rounded-2xl overflow-hidden 
                    shadow-sm hover:shadow-xl 
                    transition-all duration-300 

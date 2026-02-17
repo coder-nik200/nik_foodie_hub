@@ -25,17 +25,17 @@ export function UserContextProvider({ children }) {
   const addToCart = (product) => {
     const normalizedProduct = {
       ...product,
-      variantId: product.variantId || product.id,
+      variantId: product.variantId || product.id || product._id,
     };
 
     setCart((prev) => {
       const exists = prev.find(
-        (p) => (p.variantId || p.id) === normalizedProduct.variantId,
+        (p) => (p.variantId || p.id || p._id) === normalizedProduct.variantId,
       );
 
       if (exists) {
         return prev.map((p) =>
-          (p.variantId || p.id) === normalizedProduct.variantId
+          (p.variantId || p.id || p._id) === normalizedProduct.variantId
             ? { ...p, qty: (p.qty || 1) + 1 }
             : p,
         );
