@@ -2,6 +2,7 @@ const axios = require("axios");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const emailService = require("../services/email.service");
 
 const getSignup = async (req, res) => {
   try {
@@ -48,6 +49,8 @@ const getSignup = async (req, res) => {
         name: user.name,
       },
     });
+
+    await emailService.sendRegistrationEmail(user.email, user.name);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
