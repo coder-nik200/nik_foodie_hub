@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import api, { addToCartAPI } from "../api/axios";
+import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 
@@ -78,9 +78,8 @@ export default function FoodDetails() {
                 }
 
                 try {
-                  await addToCartAPI(item._id || item.id);
-                  addToCart(item);
-                  toast.success(`✅ ${item.name} added to cart!`);
+                  const foodId = item._id || item.id;
+                  await addToCart(foodId);
                   navigate("/cart");
                 } catch (error) {
                   toast.error(error);

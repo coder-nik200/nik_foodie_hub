@@ -16,10 +16,10 @@ router.get("/test", (req, res) => {
   res.json({ message: "Cart endpoint is working!" });
 });
 
-router.get("/cart", protect, getCart);
+router.get("/", protect, getCart);
 router.post("/add", protect, addToCart);
 router.post("/remove", protect, removeFromCart);
 router.post("/clear", protect, clearCart);
-router.post("/decrement", decrementCartItem);
+router.post("/decrement", protect, decrementCartItem);
 
 module.exports = router;

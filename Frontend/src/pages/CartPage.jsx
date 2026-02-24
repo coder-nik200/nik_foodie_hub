@@ -24,9 +24,16 @@ export default function CartPage() {
     return `/foods/view-all-hits/${id}`;
   };
 
+  // const total = cart.reduce((sum, item) => {
+  //   const price = item.price?.discountedPrice ?? item.discountedPrice ?? 0;
+  //   return sum + price * (item.qty || 1);
+  // }, 0);
+
   const total = cart.reduce((sum, item) => {
-    const price = item.price?.discountedPrice ?? item.discountedPrice ?? 0;
-    return sum + price * (item.qty || 1);
+    const price =
+      item.food?.price?.discountedPrice ?? item.food?.discountedPrice ?? 0;
+
+    return sum + price * (item.quantity || 1);
   }, 0);
 
   if (!cart || cart.length === 0)
@@ -54,63 +61,47 @@ export default function CartPage() {
       <div className="space-y-5">
         {cart.map((item) => (
           <div
-            key={item.variantId || item.id}
-            onClick={() => navigate(getItemLink(item))}
-            className="flex items-center gap-5 bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer"
+            key={item.food?._id}
+            className="flex items-center gap-5 bg-white rounded-2xl p-5 shadow-sm"
           >
             <img
-              src={item.image || item.photoURL || item.photoUrl}
-              alt={item.name}
+              src={item.food?.image || item.food?.photoURL}
+              alt={item.food?.name}
               className="w-24 h-24 object-cover rounded-xl"
             />
 
             <div className="flex-1">
-              <h2 className="font-semibold text-lg">{item.name}</h2>
-
-              <p className="text-sm text-gray-500 mt-1">
-                {item.usp || item.uspDescription || ""}
-              </p>
+              <h2 className="font-semibold text-lg">{item.food?.name}</h2>
 
               <p className="mt-3 text-lg font-bold text-green-600">
                 ₹
-                {(item.price?.discountedPrice ?? item.discountedPrice ?? 0) *
-                  (item.qty || 1)}
+                {(item.food?.price?.discountedPrice ?? 0) *
+                  (item.quantity || 1)}
               </p>
             </div>
 
             <div className="flex flex-col items-end gap-3">
-              {/* Quantity Controls */}
               <div className="flex items-center gap-3 bg-gray-100 rounded-full px-3 py-1">
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    decrementQty(item.variantId || item.id);
-                  }}
-                  className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-200 transition"
+                  onClick={() => decrementQty(item.food._id)}
+                  className="w-7 h-7 flex items-center justify-center rounded-full"
                 >
                   <Minus size={14} />
                 </button>
 
-                <span className="font-semibold">{item.qty}</span>
+                <span>{item.quantity}</span>
 
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addToCart(item);
-                  }}
-                  className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-gray-200 transition text-lg"
+                  onClick={() => addToCart(item.food._id)}
+                  className="w-7 h-7 flex items-center justify-center"
                 >
                   +
                 </button>
               </div>
 
-              {/* Remove */}
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFromCart(item.variantId || item.id);
-                }}
-                className="text-sm text-red-500 hover:text-red-600 transition font-medium"
+                onClick={() => removeFromCart(item.food._id)}
+                className="text-sm text-red-500"
               >
                 Remove
               </button>
@@ -141,8 +132,6 @@ export default function CartPage() {
     </div>
   );
 }
-
-
 
 // import { useEffect, useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
@@ -339,4 +328,3 @@ export default function CartPage() {
 //     </div>
 //   );
 // }
-

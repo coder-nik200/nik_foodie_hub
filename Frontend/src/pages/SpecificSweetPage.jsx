@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
-import api, { addToCartAPI } from "../api/axios";
+import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 import FullMenu from "../components/FullMenu";
@@ -131,9 +131,8 @@ export default function SpecificSweetPage() {
                 }
 
                 try {
-                  await addToCartAPI(sweet.id || sweet.variantId || sweet._id);
-                  addToCart(sweet);
-                  toast.success(`${sweet.name} added to cart`);
+                  const sweetId = sweet.id || sweet.variantId || sweet._id;
+                  await addToCart(sweetId);
                   navigate("/cart");
                 } catch (error) {
                   toast.error(error);

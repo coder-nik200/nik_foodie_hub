@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState, useContext } from "react";
-import api, { addToCartAPI } from "../api/axios";
+import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 
@@ -106,9 +106,7 @@ const CategoryDetails = () => {
                 }
 
                 try {
-                  await addToCartAPI(item._id);
-                  addToCart(item);
-                  toast.success(`✅ ${item.name} added to cart!`);
+                  await addToCart(item._id);
                   navigate("/cart");
                 } catch (error) {
                   toast.error(error);

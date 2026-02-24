@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams, Link } from "react-router-dom";
-import api, { addToCartAPI } from "../api/axios";
+import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 import FullMenu from "../components/FullMenu";
@@ -132,11 +132,8 @@ export default function SpecificDrinkPage() {
                 }
 
                 try {
-                  await addToCartAPI(
-                    drinks.id || drinks.variantId || drinks._id,
-                  );
-                  addToCart(drinks);
-                  toast.success(`${drinks.name} added to cart`);
+                  const drinkId = drinks.id || drinks.variantId || drinks._id;
+                  await addToCart(drinkId);
                   navigate("/cart");
                 } catch (error) {
                   toast.error(error);

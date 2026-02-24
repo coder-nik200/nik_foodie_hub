@@ -48,60 +48,22 @@ const addToCart = async (req, res) => {
   console.log("👤 USER:", req.user);
 
   try {
-    // 1️⃣ Auth check (important)
-    if (!req.user || !req.user._id) {
-      console.log("❌ Unauthorized - missing user");
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
     const userId = req.user._id;
-    const { foodId } = req.body;
+    const { foodId } = req.body; // ✅ MUST match frontend
 
     console.log("✅ Auth passed - userId:", userId);
     console.log("🍔 Food ID received:", foodId);
 
     if (!foodId) {
-      console.log("❌ Missing foodId in request body");
       return res.status(400).json({ message: "Food ID is required" });
     }
 
-    // 2️⃣ Check food exists (try MongoDB: Food, Drink, Sweet; then JSON)
-    let food = null;
-
-    // Try Food collection
-    try {
-      food = await Food.findById(foodId);
-    } catch (e) {
-      // ignore cast errors
-    }
-
-    // Try Drink collection
-    if (!food) {
-      try {
-        food = await Drink.findById(foodId);
-      } catch (e) {}
-    }
-
-    // Try Sweet collection
-    if (!food) {
-      try {
-        food = await Sweet.findById(foodId);
-      } catch (e) {}
-    }
-
-    // Finally try JSON fallback
-    if (!food) {
-      food = findFoodInJSON(foodId);
-    }
+    const food = await Food.findById(foodId);
 
     if (!food) {
-      console.log("❌ Food not found");
       return res.status(404).json({ message: "Food not found" });
     }
 
-    console.log("✅ Food found:", food.name);
-
-    // 3️⃣ Get or create cart
     let cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
@@ -111,47 +73,137 @@ const addToCart = async (req, res) => {
       });
     }
 
-    // 4️⃣ Check if item already in cart
-    // For MongoDB documents, use _id; for JSON objects use id or variantId
-    const foodIdentifier = food._id || food.id || food.variantId || foodId;
-
-    const existingItem = cart.items.find((item) => {
-      // item.food may be an ObjectId, a string, or populated object
-      const itemId = item.food?.toString
-        ? item.food.toString()
-        : String(item.food);
-      return itemId === String(foodIdentifier);
-    });
+    const existingItem = cart.items.find(
+      (item) => item.food.toString() === foodId,
+    );
 
     if (existingItem) {
       existingItem.quantity += 1;
-      console.log("✅ Item quantity updated");
     } else {
       cart.items.push({
-        food: foodIdentifier,
+        food: food._id, // ✅ MUST be this
         quantity: 1,
-        price: food.price?.discountedPrice || food.discountedPrice || 0,
-        name: food.name,
-        photoURL: food.photoURL,
       });
-      console.log("✅ Item added to cart");
     }
 
-    // 5️⃣ Save cart
     await cart.save();
 
-    res.status(200).json({
-      message: "Item added to cart",
-      cart,
-    });
+    res.status(200).json({ message: "Item added to cart" });
   } catch (error) {
     console.error("ADD TO CART ERROR:", error.message);
-    res.status(500).json({
-      message: "Failed to add item to cart",
-      error: error.message,
-    });
+    res.status(500).json({ message: "Server error" });
   }
 };
+
+// const addToCart = async (req, res) => {
+//   console.log("\n🛒 ----- ADD TO CART REQUEST ----- ");
+//   console.log("📍 Route hit: /cart/add");
+//   console.log("📦 BODY:", req.body);
+//   console.log("👤 USER:", req.user);
+
+//   try {
+//     // 1️⃣ Auth check (important)
+//     if (!req.user || !req.user._id) {
+//       console.log("❌ Unauthorized - missing user");
+//       return res.status(401).json({ message: "Unauthorized" });
+//     }
+
+//     const userId = req.user._id;
+//     const { foodId } = req.body;
+
+//     console.log("✅ Auth passed - userId:", userId);
+//     console.log("🍔 Food ID received:", foodId);
+
+//     if (!foodId) {
+//       console.log("❌ Missing foodId in request body");
+//       return res.status(400).json({ message: "Food ID is required" });
+//     }
+
+//     // 2️⃣ Check food exists (try MongoDB: Food, Drink, Sweet; then JSON)
+//     let food = null;
+
+//     // Try Food collection
+//     try {
+//       food = await Food.findById(foodId);
+//     } catch (e) {
+//       // ignore cast errors
+//     }
+
+//     // Try Drink collection
+//     if (!food) {
+//       try {
+//         food = await Drink.findById(foodId);
+//       } catch (e) {}
+//     }
+
+//     // Try Sweet collection
+//     if (!food) {
+//       try {
+//         food = await Sweet.findById(foodId);
+//       } catch (e) {}
+//     }
+
+//     // Finally try JSON fallback
+//     if (!food) {
+//       food = findFoodInJSON(foodId);
+//     }
+
+//     if (!food) {
+//       console.log("❌ Food not found");
+//       return res.status(404).json({ message: "Food not found" });
+//     }
+
+//     console.log("✅ Food found:", food.name);
+
+//     // 3️⃣ Get or create cart
+//     let cart = await Cart.findOne({ user: userId });
+
+//     if (!cart) {
+//       cart = new Cart({
+//         user: userId,
+//         items: [],
+//       });
+//     }
+
+//     // 4️⃣ Check if item already in cart
+//     // For MongoDB documents, use _id; for JSON objects use id or variantId
+//     const foodIdentifier = food._id || food.id || food.variantId || foodId;
+
+//     const existingItem = cart.items.find((item) => {
+//       // item.food may be an ObjectId, a string, or populated object
+//       const itemId = item.food?.toString
+//         ? item.food.toString()
+//         : String(item.food);
+//       return itemId === String(foodIdentifier);
+//     });
+
+//     if (existingItem) {
+//       existingItem.quantity += 1;
+//       console.log("✅ Item quantity updated");
+//     } else {
+//       cart.items.push({
+//         food: food._id,
+//         quantity: 1,
+//       });
+
+//       console.log("✅ Item added to cart");
+//     }
+
+//     // 5️⃣ Save cart
+//     await cart.save();
+
+//     res.status(200).json({
+//       message: "Item added to cart",
+//       cart,
+//     });
+//   } catch (error) {
+//     console.error("ADD TO CART ERROR:", error.message);
+//     res.status(500).json({
+//       message: "Failed to add item to cart",
+//       error: error.message,
+//     });
+//   }
+// };
 
 const removeFromCart = async (req, res) => {
   try {
@@ -240,12 +292,16 @@ const getCart = async (req, res) => {
 
     let cart = await Cart.findOne({ user: userId }).populate("items.food");
 
+    // if (!cart) {
+    //   // Return empty cart if none exists
+    //   return res.status(200).json({ cart: [] });
+    // }
+
     if (!cart) {
-      // Return empty cart if none exists
-      return res.status(200).json({ cart: [] });
+      return res.status(200).json({ cart: { items: [] } });
     }
 
-    res.status(200).json({ cart: cart.items });
+    res.status(200).json({ cart });
   } catch (error) {
     console.error("Get Cart Error:", error);
     res

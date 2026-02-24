@@ -179,16 +179,20 @@ export default function SearchPage() {
                     </div>
 
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         if (!user) {
                           toast.error("Please login to add items to cart");
                           navigate("/login");
                           return;
                         }
 
-                        addToCart(product);
-                        toast.success(`✅ ${product.name} added to cart!`);
-                        navigate("/cart");
+                        try {
+                          const productId = product._id || product.id || product.variantId;
+                          await addToCart(productId);
+                          navigate("/cart");
+                        } catch (error) {
+                          toast.error(error);
+                        }
                       }}
                       className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-semibold py-2.5 px-4 rounded-lg transition"
                     >

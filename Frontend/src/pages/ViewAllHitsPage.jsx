@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import api, { addToCartAPI } from "../api/axios";
+import api from "../api/axios";
 import { UserContext } from "../useContext";
 import toast from "react-hot-toast";
 import { RenderStars } from "../components/RenderStarts";
@@ -66,9 +66,7 @@ export default function ViewAllHitsPage() {
         return;
       }
 
-      await addToCartAPI(foodIdToSend);
-      addToCart(food); // keep UI instant
-      toast.success(`${food.name} added to cart`);
+      await addToCart(foodIdToSend);
       navigate("/cart");
     } catch (error) {
       console.error("Add to cart error:", error);
